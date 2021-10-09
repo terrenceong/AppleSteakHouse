@@ -30,7 +30,8 @@ public class RRPSSApp {
                 case 5: break;
                 case 6: System.out.println("6 -> Add/Remove order item/s to/from order ");
                 	break;
-                case 7: break;
+                case 7: System.out.println("7 -> Create reservation booking");
+                	break;
                 case 8: break;
                 case 9: break;
                 case 10:break;
