@@ -28,7 +28,8 @@ public class RRPSSApp {
                 case 3: break;
                 case 4: break;
                 case 5: break;
-                case 6: break;
+                case 6: System.out.println("6 -> Add/Remove order item/s to/from order ");
+                	break;
                 case 7: break;
                 case 8: break;
                 case 9: break;
