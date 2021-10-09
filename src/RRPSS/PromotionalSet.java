@@ -1,6 +1,5 @@
 package RRPSS;
 
-import java.text.DecimalFormat;
 
 public class PromotionalSet {
     private MainCourse main;
@@ -19,6 +18,7 @@ public class PromotionalSet {
         this.desription = main.getName() +"\n" + side.getName() + "\n" + drink.getName();
 
     }
+
 
     public MainCourse getMain() {
         return main;

@@ -2,6 +2,7 @@ package RRPSS;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class RRPSSApp {
@@ -24,8 +25,8 @@ public class RRPSSApp {
             switch(choice)
             {
                 case 1: printFoodMenu();break;
-                case 2: break;
-                case 3: break;
+                case 2: editFoodMenu();break;
+                case 3: editPromotionalSet();break;
                 case 4: break;
                 case 5: break;
                 case 6: break;
@@ -80,7 +81,7 @@ public class RRPSSApp {
         sidesList.add(new Sides("Squid Head",10,"Tender and juicy squid head"));
         sidesList.add(new Sides("Cheese Platter",20,"Gourmet cheeses include award-winning truffle gouda, smoked cheese, soft & creamy brie"));
         drinksList.add(new Drinks("Latte",5,"Made with arabic beans"));
-        drinksList.add(new Drinks("English Tea",3.8,"Special tea leaves imported from england"));
+        drinksList.add(new Drinks("English Tea",3.8,"Special tea leaves imported from England"));
         drinksList.add(new Drinks("Lime Juice",3.8,"Fresh squeezed lime juice"));
         drinksList.add(new Drinks("Coke",3,"Your typical coke on canned"));
         promotionalSetList.add(new PromotionalSet("A",mainCoursesList.get(0),sidesList.get(0),drinksList.get(2)));
@@ -98,11 +99,146 @@ public class RRPSSApp {
         System.out.println("=======Main Course=======");
         for(MainCourse m:mainCoursesList)
             System.out.println(++i + ") " + m.getName() + ": $" + m.getPrice() + "\n" + m.getDescription());
+        System.out.println("=======Sides=======");
         for(Sides s:sidesList)
             System.out.println(++i + ") " + s.getName() + ": $" + s.getPrice() + "\n" + s.getDescription());
+        System.out.println("=======Drinks=======");
         for(Drinks d:drinksList)
             System.out.println(++i + ") " + d.getName() + ": $" + d.getPrice() + "\n" + d.getDescription());
 
     }
+    private static void editFoodMenu()
+    {
+        int i =0;
+        sc.nextLine();
+        System.out.println("Add(A), Update(U), Remove(R)");
+        System.out.print("Enter A/U/R:");
+        char action = sc.nextLine().toLowerCase().charAt(0);
+        System.out.println("MainCourse(M), Sides(S), Drinks(D)");
+        System.out.print("Enter M/S/D:");
+        char choice = sc.nextLine().toLowerCase().charAt(0);
+        switch(action)
+        {
+            case 'a':
+                        System.out.print("Enter name of item:");
+                        String name = sc.nextLine();
+                        System.out.print("Enter price:");
+                        double price = sc.nextDouble();
+                        sc.nextLine();
+                        System.out.print("Enter description:");
+                        String description = sc.nextLine();
+                        System.out.println("Item added!");
+                        switch(choice) {
+                            case 'm':  mainCoursesList.add(new MainCourse(name,price,description));break;
+                            case 's':  sidesList.add(new Sides(name,price,description));break;
+                            case 'd':  drinksList.add(new Drinks(name,price,description));break;
+                        }break;
+            case 'r':
+                        switch (choice)
+                        {
+                            case 'm':  for(MainCourse m:mainCoursesList)
+                                         System.out.println(++i  +") " + m.getName());
+                                        System.out.print("Enter item to be removed:");
+                                        mainCoursesList.remove(sc.nextInt()-1);break;
+                            case 's': for(Sides s:sidesList)
+                                         System.out.println(++i  +") " + s.getName());
+                                        System.out.print("Enter item to be removed:");
+                                        sidesList.remove(sc.nextInt()-1);break;
+                            case 'd':  for(Drinks d:drinksList)
+                                        System.out.println(++i  +") " + d.getName());
+                                        System.out.print("Enter item to be removed:");
+                                        drinksList.remove(sc.nextInt()-1);break;
+
+                        }
+                        System.out.println("Successfully removed");break;
+            case 'u':
+                        switch(choice)
+                        {
+                            case 'm':  for(MainCourse m:mainCoursesList)
+                                System.out.println(++i  +") " + m.getName());
+                                System.out.print("Enter item to be updated:");
+                                int item = sc.nextInt()-1;
+                                System.out.println("1 - > Name");
+                                System.out.println("2 - > Price");
+                                System.out.println("3 - > Description");
+                                System.out.print("Select details to be updated:");
+                                switch(sc.nextInt())
+                                {
+                                    case 1:
+                                        System.out.print("Enter new name:");
+                                        sc.nextLine();
+                                        mainCoursesList.get(item).setName(sc.nextLine());break;
+                                    case 2:
+                                        System.out.print("Enter new price in SGD:");
+                                        mainCoursesList.get(item).setPrice(sc.nextDouble());break;
+                                    case 3:
+                                        System.out.print("Enter new description:");
+                                        sc.nextLine();
+                                        mainCoursesList.get(item).setDescription(sc.nextLine());break;
+                                }break;
+                            case 's':
+                                    for(Sides s:sidesList)
+                                        System.out.println(++i  +") " + s.getName());
+                                    System.out.print("Enter item to be updated:");
+                                    item = sc.nextInt()-1;
+                                    System.out.println("1 - > Name");
+                                    System.out.println("2 - > Price");
+                                    System.out.println("3 - > Description");
+                                    System.out.print("Select details to be updated:");
+                                    switch(sc.nextInt())
+                                    {
+                                        case 1:
+                                            System.out.print("Enter new name:");
+                                            sc.nextLine();
+                                            sidesList.get(item).setName(sc.nextLine());break;
+                                        case 2:
+                                            System.out.print("Enter new price in SGD:");
+                                            sidesList.get(item).setPrice(sc.nextDouble());break;
+                                        case 3:
+                                            System.out.print("Enter new description:");
+                                            sc.nextLine();
+                                            sidesList.get(item).setDescription(sc.nextLine());break;
+                                    }break;
+                            case 'd':
+                                for(Drinks d:drinksList)
+                                    System.out.println(++i  +") " + d.getName());
+                                System.out.print("Enter item to be updated:");
+                                item = sc.nextInt()-1;
+                                System.out.println("1 - > Name");
+                                System.out.println("2 - > Price");
+                                System.out.println("3 - > Description");
+                                System.out.print("Select details to be updated:");
+                                switch(sc.nextInt())
+                                {
+                                    case 1:
+                                        System.out.print("Enter new name:");
+                                        sc.nextLine();
+                                        drinksList.get(item).setName(sc.nextLine());break;
+                                    case 2:
+                                        System.out.print("Enter new price in SGD:");
+                                        drinksList.get(item).setPrice(sc.nextDouble());break;
+                                    case 3:
+                                        System.out.print("Enter new description:");
+                                        sc.nextLine();
+                                        drinksList.get(item).setDescription(sc.nextLine());break;
+                                }break;
+                        }
+                        System.out.println("Successfully updated!");
+        }
+    }
+    private static void editPromotionalSet()
+    {
+        int i =0;
+        sc.nextLine();
+        System.out.println("Add(A), Update(U), Remove(R)");
+        System.out.print("Enter A/U/R:");
+        char action = sc.nextLine().toLowerCase().charAt(0);
+        switch(action)
+        {
+            case 'a':
+        }
+    }
+
+
 
 }
