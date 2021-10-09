@@ -15,6 +15,7 @@ public class RRPSSApp {
         Staff s = new Staff();
         enterStaffInfo(s);
         printOption(s);
+        initializeFoodMenu();
         boolean quit = false;
         while(!quit)
         {
@@ -22,7 +23,7 @@ public class RRPSSApp {
             int choice = sc.nextInt();
             switch(choice)
             {
-                case 1: break;
+                case 1: printFoodMenu();break;
                 case 2: break;
                 case 3: break;
                 case 4: break;
@@ -70,11 +71,11 @@ public class RRPSSApp {
     }
     private static void initializeFoodMenu()
     {
-        mainCoursesList.add(new MainCourse("Apple House's Steak",19.99,"Classical Tenderloin top with mushroom apple cinder and mushroom sauce"));
+        mainCoursesList.add(new MainCourse("Apple House's Steak",19.90,"Classical Tenderloin top with mushroom apple cinder and mushroom sauce"));
         mainCoursesList.add(new MainCourse("T-Bone Steak",23.5,"Hearty bone-in steak that’s sure to fill your needs"));
         mainCoursesList.add(new MainCourse("Striploin Steak",22.5,"A steakhouse classic, succulent and flavoursome"));
         mainCoursesList.add(new MainCourse("Classic Fish & Chips",15.5,"Classical fish and chips that everyone is hook into!"));
-        sidesList.add(new Sides("Mushroom Soup",3.4,"Your non average mushroom soup"));
+        sidesList.add(new Sides("Mushroom Soup",3.5,"Your non average mushroom soup"));
         sidesList.add(new Sides("Garlic Bun",5,"Slice of loaf topped with cheesy garlic sauce"));
         sidesList.add(new Sides("Squid Head",10,"Tender and juicy squid head"));
         sidesList.add(new Sides("Cheese Platter",20,"Gourmet cheeses include award-winning truffle gouda, smoked cheese, soft & creamy brie"));
@@ -89,7 +90,19 @@ public class RRPSSApp {
     }
     private static void printFoodMenu()
     {
-        
+        int i =0;
+        System.out.println("APPLE STEAK HOUSE's MENU");
+        System.out.println("=======Promotional Set=======");
+        for(PromotionalSet p:promotionalSetList)
+            System.out.println(++i + ") Set " + p.getName() + ": $" + p.getPrice() + "\n" + p.getDesription());
+        System.out.println("=======Main Course=======");
+        for(MainCourse m:mainCoursesList)
+            System.out.println(++i + ") " + m.getName() + ": $" + m.getPrice() + "\n" + m.getDescription());
+        for(Sides s:sidesList)
+            System.out.println(++i + ") " + s.getName() + ": $" + s.getPrice() + "\n" + s.getDescription());
+        for(Drinks d:drinksList)
+            System.out.println(++i + ") " + d.getName() + ": $" + d.getPrice() + "\n" + d.getDescription());
+
     }
 
 }

@@ -1,16 +1,23 @@
 package RRPSS;
 
+import java.text.DecimalFormat;
+
 public class PromotionalSet {
     private MainCourse main;
     private Sides side;
     private Drinks drink;
     private String name;
+    private double price;
+    private String desription;
 
     public PromotionalSet(String name,MainCourse main, Sides side, Drinks drink) {
         this.main = main;
         this.side = side;
         this.drink = drink;
         this.name = name;
+        this.price = Math.floor((main.getPrice() + drink.getPrice() + side.getPrice())*0.9);
+        this.desription = main.getName() +"\n" + side.getName() + "\n" + drink.getName();
+
     }
 
     public MainCourse getMain() {
@@ -43,5 +50,21 @@ public class PromotionalSet {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDesription() {
+        return desription;
+    }
+
+    public void setDesription(String desription) {
+        this.desription = desription;
     }
 }
