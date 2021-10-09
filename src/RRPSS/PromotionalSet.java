@@ -20,6 +20,8 @@ public class PromotionalSet {
     }
 
 
+
+
     public MainCourse getMain() {
         return main;
     }
@@ -56,15 +58,15 @@ public class PromotionalSet {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPrice() {
+        this.price = Math.floor((main.getPrice() + drink.getPrice() + side.getPrice())*0.9);
     }
 
     public String getDesription() {
         return desription;
     }
 
-    public void setDesription(String desription) {
-        this.desription = desription;
+    public void setDesription() {
+        this.desription = main.getName() +"\n" + side.getName() + "\n" + drink.getName();
     }
 }
