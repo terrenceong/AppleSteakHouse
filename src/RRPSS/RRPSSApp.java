@@ -1,9 +1,15 @@
 package RRPSS;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class RRPSSApp {
     private static Scanner sc = new Scanner(System.in);
+    private static List<MainCourse> mainCoursesList = new ArrayList<>();
+    private static List<Sides> sidesList = new ArrayList<>();
+    private static List<Drinks> drinksList = new ArrayList<>();
+    private static List<PromotionalSet> promotionalSetList = new ArrayList<>();
     public static void main(String[] args) {
 	// write your code here
         Staff s = new Staff();
@@ -62,4 +68,28 @@ public class RRPSSApp {
         System.out.println("12 -> Quit");
 
     }
+    private static void initializeFoodMenu()
+    {
+        mainCoursesList.add(new MainCourse("Apple House's Steak",19.99,"Classical Tenderloin top with mushroom apple cinder and mushroom sauce"));
+        mainCoursesList.add(new MainCourse("T-Bone Steak",23.5,"Hearty bone-in steak that’s sure to fill your needs"));
+        mainCoursesList.add(new MainCourse("Striploin Steak",22.5,"A steakhouse classic, succulent and flavoursome"));
+        mainCoursesList.add(new MainCourse("Classic Fish & Chips",15.5,"Classical fish and chips that everyone is hook into!"));
+        sidesList.add(new Sides("Mushroom Soup",3.4,"Your non average mushroom soup"));
+        sidesList.add(new Sides("Garlic Bun",5,"Slice of loaf topped with cheesy garlic sauce"));
+        sidesList.add(new Sides("Squid Head",10,"Tender and juicy squid head"));
+        sidesList.add(new Sides("Cheese Platter",20,"Gourmet cheeses include award-winning truffle gouda, smoked cheese, soft & creamy brie"));
+        drinksList.add(new Drinks("Latte",5,"Made with arabic beans"));
+        drinksList.add(new Drinks("English Tea",3.8,"Special tea leaves imported from england"));
+        drinksList.add(new Drinks("Lime Juice",3.8,"Fresh squeezed lime juice"));
+        drinksList.add(new Drinks("Coke",3,"Your typical coke on canned"));
+        promotionalSetList.add(new PromotionalSet("A",mainCoursesList.get(0),sidesList.get(0),drinksList.get(2)));
+        promotionalSetList.add(new PromotionalSet("B",mainCoursesList.get(1),sidesList.get(0),drinksList.get(1)));
+        promotionalSetList.add(new PromotionalSet("C",mainCoursesList.get(3),sidesList.get(1),drinksList.get(0)));
+
+    }
+    private static void printFoodMenu()
+    {
+        
+    }
+
 }
