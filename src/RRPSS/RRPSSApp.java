@@ -2,6 +2,13 @@ package RRPSS;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class RRPSSApp {
     private static Scanner sc = new Scanner(System.in);
@@ -12,51 +19,37 @@ public class RRPSSApp {
     private static List<Order> dineInOrderList = new ArrayList<>();
     private static List<Order> takeAwayOrderList = new ArrayList<>();
     private static List<Order> completedOrderList = new ArrayList<>();
-
+    private static List<Table> tableList = new ArrayList<>();
+    private static List<Reservation> reservationList = new ArrayList<>();
     public static void main(String[] args) {
         // write your code here
         Staff s = new Staff();
         enterStaffInfo(s);
         printOption(s);
         initializeFoodMenu();
+        initializeTables();
         boolean quit = false;
-        while (!quit) {
+        while(!quit)
+        {
+        	checkExpiredReservations();
             System.out.print("Enter your choice:");
             int choice = sc.nextInt();
-            switch (choice) {
-                case 1:
-                    printFoodMenu();
-                    break;
-                case 2:
-                    editFoodMenu();
-                    break;
-                case 3:
-                    editPromotionalSet();
-                    break;
-                case 4:
-                    createOrder(s);
-                    break;
-                case 5:
-                    viewOrder();
-                    break;
-                case 6:
-                    editOrders();
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
-                case 10:
-                    break;
-                case 11:
-                    break;
-                default:
-                    quit = true;
+            switch(choice)
+            {
+                case 1: printFoodMenu();break;
+                case 2: editFoodMenu();break;
+                case 3: editPromotionalSet();break;
+                case 4: createOrder(s);break;
+                case 5: viewOrder();break;
+                case 6: editOrders();break;
+                case 7: createReservation();break;
+                case 8: checkReservations();break;
+                case 9: printTables();break;
+                case 10: setTableAvailability();break;
+                case 11: break;
+                default: quit = true;
             }
         }
-
 
     }
 
@@ -82,9 +75,10 @@ public class RRPSSApp {
         System.out.println("7 -> Create reservation booking");
         System.out.println("8 -> Check/Remove reservation booking");
         System.out.println("9 -> Check table availability");
-        System.out.println("10 -> Print order invoice");
-        System.out.println("11 -> Print sale revenue report by period");
-        System.out.println("12 -> Quit");
+        System.out.println("10 -> Set table availability");
+        System.out.println("11 -> Print order invoice");
+        System.out.println("12 -> Print sale revenue report by period");
+        System.out.println("13 -> Quit");
 
     }
 
@@ -107,8 +101,159 @@ public class RRPSSApp {
 
     }
 
-    private static void printFoodMenu() {
-        int i = 0;
+    private static void initializeTables()
+    {
+        tableList.add(new Table(1,2));
+        tableList.add(new Table(2,2));
+        tableList.add(new Table(3,2));
+        tableList.add(new Table(4,2));
+        tableList.add(new Table(5,4));
+        tableList.add(new Table(6,4));
+        tableList.add(new Table(7,4));
+        tableList.add(new Table(8,6));
+        tableList.add(new Table(9,6));
+        tableList.add(new Table(10,10));
+    }
+    private static void printTables()
+    {
+	   	int i =1;
+	   	System.out.println("=======Available Tables=======");
+	    for(Table t:tableList) {
+	       	System.out.print("Table "+ i++ +": ");
+	   		System.out.println(t.getAvailability());
+	    }
+   }
+    private static void setTableAvailability()
+    {
+    	int tableId;
+    	String availability;
+		System.out.print("Enter the table number:");
+		tableId = sc.nextInt();
+		sc.nextLine();
+		System.out.print("Enter the table status:");
+		availability = sc.nextLine().toUpperCase();
+		if(availability.equals("AVAILABLE") || availability.equals("UNAVAILABLE") || availability.equals("RESERVED")) {
+			for(Table t:tableList) {
+				if(t.getTableId()==tableId)
+					t.setAvailability(availability);
+				
+			}
+			System.out.println("Table status updated");
+		}
+		else {
+			System.out.println("Invalid status");
+		}
+   }
+    private static void createReservation(){
+    	try {
+    		String reservationDate=null, name;
+        	int pax, contact;
+        	Table table = null;
+        	LocalDateTime reservationDateFormatted,creationDate;
+        	
+        	System.out.print("Enter the number of persons:");
+        	pax = sc.nextInt();
+        	for(Table t:tableList) {
+        		if(t.getAvailability()=="AVAILABLE" && t.getNumOfSeats()>=pax) {
+        			if(t.getNumOfSeats()==10 && pax<=4) {
+        				System.out.println("No tables available!");
+        				return;
+        			}
+        			t.setAvailability("RESERVED");
+        			table=t;
+        			break;
+        		}
+        	}
+        	if(table==null) {
+        		System.out.println("No tables available!");
+        		return;
+        	}
+        	sc.nextLine();
+        	do {
+        		if(reservationDate!=null)
+        			System.out.println("Invalid date");
+        		System.out.print("Enter the reservation date in dd-MM-yyyy HH:mm:");
+    	    	reservationDate = sc.nextLine();
+    	    	DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"); 
+    	    	reservationDateFormatted = LocalDateTime.parse(reservationDate, format);
+    	    	creationDate = LocalDateTime.now();
+        	}
+        	while(reservationDateFormatted.isBefore(creationDate));
+        	
+
+        	System.out.print("Enter your name for the reservation:");
+        	name = sc.nextLine().toUpperCase();
+        	System.out.print("Enter your contact for the reservation:");
+        	contact = sc.nextInt();
+        	
+        	reservationList.add(new Reservation(reservationDateFormatted,creationDate, pax, name, contact, table));
+        	System.out.println("Reservation created!");
+    	}
+    	catch (Exception e) {
+    		System.out.print("Invalid input");
+    	}
+    	
+	}
+    private static void checkExpiredReservations() {
+    	try {
+    		int i=0;
+        	LocalDateTime currentDate = LocalDateTime.now();
+        	for(Reservation r:reservationList) {
+        		if(r.getDateReserved().isBefore(currentDate)) {
+        			r.getTable().setAvailability("AVAILABLE");
+        			reservationList.remove(i);
+        			checkExpiredReservations();
+        			return;
+        		}
+        			
+        		i++;
+        	}
+    	}
+    	catch (Exception e) {
+    		System.out.println(e);
+    	}
+    	
+    }
+    private static void checkReservations() {
+    	if(reservationList.isEmpty()) {
+			System.out.println("No current Reservations");
+			return;
+		}
+    	char action;
+    	String name;
+    	int contact,i=0;
+    	DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        System.out.println("Check(C) or Remove(R) Reservations");
+        System.out.print("Enter C/R:");
+        sc.nextLine();
+        action = sc.nextLine().toLowerCase().charAt(0);
+        switch(action) {
+	    	case 'c':
+	    		for(Reservation r:reservationList) {
+	        		System.out.println("Customer Name:"+r.getName()+" Contact:"+r.getContact()+"; For "+r.getPax()+"pax at Table "
+	    		+r.getTable().getTableId()+" for "+r.getDateReserved().format(myFormatObj)+"| Created at:"+r.getDateCreated().format(myFormatObj));
+	        	}
+	    		break;
+	    	case 'r':
+	    		System.out.print("Enter Name of Reservation to remove:");
+	    		name = sc.nextLine().toUpperCase();
+	    		System.out.print("Enter Contact of Reservation to remove:");
+	    		contact = sc.nextInt();
+	    		for(Reservation r:reservationList) {
+	        		if(r.getName().equals(name) && r.getContact()==contact) {
+	        			r.getTable().setAvailability("AVAILABLE");
+	        			reservationList.remove(i);
+		        		return;
+	        		}
+	    			i++;
+	        	}
+	    		System.out.println("Reservation not found");
+        }
+    	
+    }
+    private static void printFoodMenu()
+    {
+        int i =0;
         System.out.println("APPLE STEAK HOUSE's MENU");
         System.out.println("=======Promotional Set=======");
         for (PromotionalSet p : promotionalSetList)
@@ -368,7 +513,6 @@ public class RRPSSApp {
 
         }
     }
-
     private static void createOrder(Staff s) {
         sc.nextLine();
         Random rdm = new Random();
