@@ -2,13 +2,13 @@ package RRPSS;
 
 public class Staff {
     private String name;
-    private int ID;
+    private String ID;
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
@@ -16,7 +16,7 @@ public class Staff {
         return name;
     }
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 }
