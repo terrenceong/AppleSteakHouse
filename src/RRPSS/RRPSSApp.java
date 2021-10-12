@@ -539,6 +539,7 @@ public class RRPSSApp {
         if (t == 'n') {
             orderID = "D" + (rdm.nextInt(9999) + 10000 + rdm.nextInt(5));
             dineInOrderList.add(new Order(s, mem, date, time, orderID, table));
+            tableList.get(table-1).setAvailability("UNAVAILABLE");
         } else {
             orderID = "T" + (rdm.nextInt(9999) + 10000 + rdm.nextInt(5));
             takeAwayOrderList.add(new Order(s, mem, date, time, orderID, table));
