@@ -24,7 +24,33 @@ public class Order {
         this.orderTime =time;
     }
 
-    public void setTotalCost(double totalCost) {
+    public Order(Staff s,boolean isMembership,String date,String time,String ID,int t, List<OrderItems> itemList) {
+        this.itemList = itemList;
+        this.orderid = ID;
+        this.orderDate  = date;
+        this.isMembership = isMembership;
+        this.table = t;
+        this.s =s;
+        this.orderTime =time;
+    }
+
+    public Staff getS() {
+		return s;
+	}
+
+	public void setS(Staff s) {
+		this.s = s;
+	}
+
+	public boolean isMembership() {
+		return isMembership;
+	}
+
+	public void setMembership(boolean isMembership) {
+		this.isMembership = isMembership;
+	}
+
+	public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
 
