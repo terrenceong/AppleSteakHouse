@@ -36,17 +36,17 @@ public class RRPSSApp {
             int choice = sc.nextInt();
             switch(choice)
             {
-                case 1: printFoodMenu();break;
-                case 2: editFoodMenu();break;
-                case 3: editPromotionalSet();break;
-                case 4: createOrder(s);break;
-                case 5: viewOrder();break;
-                case 6: editOrders();break;
-                case 7: createReservation();break;
-                case 8: checkReservations();break;
-                case 9: printTables();break;
-                case 10: setTableAvailability();break;
-                case 11: break;
+                case 1: checkExpiredReservations();printFoodMenu();break;
+                case 2: checkExpiredReservations();editFoodMenu();break;
+                case 3: checkExpiredReservations();editPromotionalSet();break;
+                case 4: checkExpiredReservations();createOrder(s);break;
+                case 5: checkExpiredReservations();viewOrder();break;
+                case 6: checkExpiredReservations();editOrders();break;
+                case 7: checkExpiredReservations();createReservation();break;
+                case 8: checkExpiredReservations();checkReservations();break;
+                case 9: checkExpiredReservations();printTables();break;
+                case 10: checkExpiredReservations();setTableAvailability();break;
+                case 11: checkExpiredReservations();break;
                 default: quit = true;
             }
         }
@@ -114,6 +114,7 @@ public class RRPSSApp {
         tableList.add(new Table(9,6));
         tableList.add(new Table(10,10));
     }
+    
     private static void printTables()
     {
 	   	int i =1;
@@ -122,7 +123,8 @@ public class RRPSSApp {
 	       	System.out.print("Table "+ i++ +": ");
 	   		System.out.println(t.getAvailability());
 	    }
-   }
+    }
+    
     private static void setTableAvailability()
     {
     	int tableId;
@@ -143,7 +145,8 @@ public class RRPSSApp {
 		else {
 			System.out.println("Invalid status");
 		}
-   }
+    }
+    
     private static void createReservation(){
     	try {
     		String reservationDate=null, name;
@@ -194,6 +197,7 @@ public class RRPSSApp {
     	}
     	
 	}
+    
     private static void checkExpiredReservations() {
     	try {
     		int i=0;
@@ -214,6 +218,7 @@ public class RRPSSApp {
     	}
     	
     }
+    
     private static void checkReservations() {
     	if(reservationList.isEmpty()) {
 			System.out.println("No current Reservations");
@@ -251,6 +256,7 @@ public class RRPSSApp {
         }
     	
     }
+    
     private static void printFoodMenu()
     {
         int i =0;
@@ -513,6 +519,7 @@ public class RRPSSApp {
 
         }
     }
+    
     private static void createOrder(Staff s) {
         sc.nextLine();
         Random rdm = new Random();
@@ -626,285 +633,286 @@ public class RRPSSApp {
             }
         }
     }
-        private static void editOrders()
-        {
-            int index = -1;
-            int x = 0;
-            if (takeAwayOrderList.size() != 0) {
-                System.out.println("========Takeaway Orders========");
-                for (Order o : takeAwayOrderList)
-                    System.out.println("#" + o.getOrderid() + " " + o.getOrderTime());
-            }
-            if (dineInOrderList.size() != 0) {
-                System.out.println("========Dine in Orders=========");
-                for (Order o : dineInOrderList)
-                    System.out.println("#" + o.getOrderid() + " Table " + o.getTable() + " " + o.getOrderTime());
-            }
-            if (dineInOrderList.size() == 0 && takeAwayOrderList.size() == 0) {
-                System.out.println("There are no orders right now");
-                return;
-            }
-            sc.nextLine();
-            while (index == -1) {
-                System.out.print("Enter Order ID to add/remove items:");
-                String choice = sc.nextLine().toUpperCase();
-                if (choice.charAt(0) == 'T') {
-                    for (int i = 0; i < takeAwayOrderList.size(); i++) {
-                        if (takeAwayOrderList.get(i).getOrderid().equals(choice)) {
-                            index = i;
-                            break;
-                        }
+    
+    private static void editOrders()
+    {
+        int index = -1;
+        int x = 0;
+        if (takeAwayOrderList.size() != 0) {
+            System.out.println("========Takeaway Orders========");
+            for (Order o : takeAwayOrderList)
+                System.out.println("#" + o.getOrderid() + " " + o.getOrderTime());
+        }
+        if (dineInOrderList.size() != 0) {
+            System.out.println("========Dine in Orders=========");
+            for (Order o : dineInOrderList)
+                System.out.println("#" + o.getOrderid() + " Table " + o.getTable() + " " + o.getOrderTime());
+        }
+        if (dineInOrderList.size() == 0 && takeAwayOrderList.size() == 0) {
+            System.out.println("There are no orders right now");
+            return;
+        }
+        sc.nextLine();
+        while (index == -1) {
+            System.out.print("Enter Order ID to add/remove items:");
+            String choice = sc.nextLine().toUpperCase();
+            if (choice.charAt(0) == 'T') {
+                for (int i = 0; i < takeAwayOrderList.size(); i++) {
+                    if (takeAwayOrderList.get(i).getOrderid().equals(choice)) {
+                        index = i;
+                        break;
                     }
-                    if (index == -1) {
-                        System.out.println("Invalid Order ID please try again");
-                        continue;
-                    }
-                    System.out.print("Select Add(A)/Remove(R) items for order #" + takeAwayOrderList.get(index).getOrderid() + ":");
-                    char c = sc.nextLine().toLowerCase().charAt(0);
-                    do {
-                        x = 0;
-                        if (c == 'a') {
-                            System.out.print("Select: Promotional set(P), MainCourse(M), Sides(S), Drinks(D):");
-                            char l = sc.nextLine().toLowerCase().charAt(0);
-                            switch (l) {
+                }
+                if (index == -1) {
+                    System.out.println("Invalid Order ID please try again");
+                    continue;
+                }
+                System.out.print("Select Add(A)/Remove(R) items for order #" + takeAwayOrderList.get(index).getOrderid() + ":");
+                char c = sc.nextLine().toLowerCase().charAt(0);
+                do {
+                    x = 0;
+                    if (c == 'a') {
+                        System.out.print("Select: Promotional set(P), MainCourse(M), Sides(S), Drinks(D):");
+                        char l = sc.nextLine().toLowerCase().charAt(0);
+                        switch (l) {
 
-                                case 'm':
-                                    for (MainCourse m : mainCoursesList)
-                                        System.out.println(++x + ") " + m.getName() + " $" + m.getPrice());
-                                    System.out.print("Select your MainCourse:");
-                                    int m = sc.nextInt() - 1;
-                                    System.out.print("Enter qty:");
-                                    int q = sc.nextInt();
-                                    Order o = takeAwayOrderList.get(index);
-                                    o.setTotalCost(o.getTotalCost() + (mainCoursesList.get(m).getPrice() * q));
-                                    o.getItemList().add(new OrderItems(q, mainCoursesList.get(m).getPrice(),
-                                            mainCoursesList.get(m).getName()));
-                                    break;
-                                case 's':
-                                    for (Sides s : sidesList)
-                                        System.out.println(++x + ") " + s.getName() + " $" + s.getPrice());
-                                    System.out.print("Select your Side:");
-                                    int s = sc.nextInt() - 1;
-                                    System.out.print("Enter qty:");
-                                    q = sc.nextInt();
-                                    o = takeAwayOrderList.get(index);
-                                    o.setTotalCost(o.getTotalCost() + (sidesList.get(s).getPrice() * q));
-                                    o.getItemList().add(new OrderItems(q, sidesList.get(s).getPrice(),
-                                            sidesList.get(s).getName()));
-                                    break;
-                                case 'd':
-                                    for (Drinks d : drinksList)
-                                        System.out.println(++x + ") " + d.getName() + " $" + d.getPrice());
-                                    System.out.print("Select your drink:");
-                                    int d = sc.nextInt() - 1;
-                                    System.out.print("Enter qty:");
-                                    q = sc.nextInt();
-                                    o = takeAwayOrderList.get(index);
-                                    o.setTotalCost(o.getTotalCost() + (drinksList.get(d).getPrice() * q));
-                                    o.getItemList().add(new OrderItems(q, drinksList.get(d).getPrice(),
-                                            drinksList.get(d).getName()));
-                                    break;
-                                case 'p':
-                                    for (PromotionalSet p : promotionalSetList) {
-                                        System.out.println(++x + ") " + p.getName() + " $" + p.getPrice());
-                                        System.out.println(p.getDesription());
-                                    }
-                                    System.out.print("Select your promotional set:");
-                                    int p = sc.nextInt() - 1;
-                                    System.out.print("Enter qty:");
-                                    q = sc.nextInt();
-                                    o = takeAwayOrderList.get(index);
-                                    o.setTotalCost(o.getTotalCost() + (promotionalSetList.get(p).getPrice() * q));
-                                    o.getItemList().add(new OrderItems(q, promotionalSetList.get(p).getPrice(),
-                                            promotionalSetList.get(p).getName()));
-                                    break;
-
-                            }
-                            System.out.println("Successfully added");
-                            sc.nextLine();
-                        }
-                        else if(c=='r')
-                        {
-
-                            int count =0;
-                            int qtyRemove =1;
-                            Order o = takeAwayOrderList.get(index);
-                            if(o.getItemList().size()==0)
-                            {
-                                System.out.println("Order ID# " + o.getOrderid() + " is empty!");
-                            }
-                            else
-                            {
-                                for (OrderItems item : o.getItemList()) {
-                                    System.out.printf(++count + ") %s Qty: %d",item.getItemName(),item.getQty());
-                                    System.out.println();
+                            case 'm':
+                                for (MainCourse m : mainCoursesList)
+                                    System.out.println(++x + ") " + m.getName() + " $" + m.getPrice());
+                                System.out.print("Select your MainCourse:");
+                                int m = sc.nextInt() - 1;
+                                System.out.print("Enter qty:");
+                                int q = sc.nextInt();
+                                Order o = takeAwayOrderList.get(index);
+                                o.setTotalCost(o.getTotalCost() + (mainCoursesList.get(m).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, mainCoursesList.get(m).getPrice(),
+                                        mainCoursesList.get(m).getName()));
+                                break;
+                            case 's':
+                                for (Sides s : sidesList)
+                                    System.out.println(++x + ") " + s.getName() + " $" + s.getPrice());
+                                System.out.print("Select your Side:");
+                                int s = sc.nextInt() - 1;
+                                System.out.print("Enter qty:");
+                                q = sc.nextInt();
+                                o = takeAwayOrderList.get(index);
+                                o.setTotalCost(o.getTotalCost() + (sidesList.get(s).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, sidesList.get(s).getPrice(),
+                                        sidesList.get(s).getName()));
+                                break;
+                            case 'd':
+                                for (Drinks d : drinksList)
+                                    System.out.println(++x + ") " + d.getName() + " $" + d.getPrice());
+                                System.out.print("Select your drink:");
+                                int d = sc.nextInt() - 1;
+                                System.out.print("Enter qty:");
+                                q = sc.nextInt();
+                                o = takeAwayOrderList.get(index);
+                                o.setTotalCost(o.getTotalCost() + (drinksList.get(d).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, drinksList.get(d).getPrice(),
+                                        drinksList.get(d).getName()));
+                                break;
+                            case 'p':
+                                for (PromotionalSet p : promotionalSetList) {
+                                    System.out.println(++x + ") " + p.getName() + " $" + p.getPrice());
+                                    System.out.println(p.getDesription());
                                 }
-                                System.out.print("Select item to be removed:");
-                                int n = sc.nextInt()-1;
-                                if(o.getItemList().get(n).getQty() > 1)
-                                {
-                                    System.out.print("Enter number of qty to remove:");
+                                System.out.print("Select your promotional set:");
+                                int p = sc.nextInt() - 1;
+                                System.out.print("Enter qty:");
+                                q = sc.nextInt();
+                                o = takeAwayOrderList.get(index);
+                                o.setTotalCost(o.getTotalCost() + (promotionalSetList.get(p).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, promotionalSetList.get(p).getPrice(),
+                                        promotionalSetList.get(p).getName()));
+                                break;
+
+                        }
+                        System.out.println("Successfully added");
+                        sc.nextLine();
+                    }
+                    else if(c=='r')
+                    {
+
+                        int count =0;
+                        int qtyRemove =1;
+                        Order o = takeAwayOrderList.get(index);
+                        if(o.getItemList().size()==0)
+                        {
+                            System.out.println("Order ID# " + o.getOrderid() + " is empty!");
+                        }
+                        else
+                        {
+                            for (OrderItems item : o.getItemList()) {
+                                System.out.printf(++count + ") %s Qty: %d",item.getItemName(),item.getQty());
+                                System.out.println();
+                            }
+                            System.out.print("Select item to be removed:");
+                            int n = sc.nextInt()-1;
+                            if(o.getItemList().get(n).getQty() > 1)
+                            {
+                                System.out.print("Enter number of qty to remove:");
+                                 qtyRemove = sc.nextInt();
+                                 while(qtyRemove > o.getItemList().get(n).getQty())
+                                 {
+                                     System.out.println("qty cannot be greater than " + o.getItemList().get(n).getQty());
+                                     System.out.print("Enter number of qty to remove:");
                                      qtyRemove = sc.nextInt();
-                                     while(qtyRemove > o.getItemList().get(n).getQty())
-                                     {
-                                         System.out.println("qty cannot be greater than " + o.getItemList().get(n).getQty());
-                                         System.out.print("Enter number of qty to remove:");
-                                         qtyRemove = sc.nextInt();
-                                     }
-
-                                }
-                                if(qtyRemove==o.getItemList().get(n).getQty())
-                                {
-                                    o.setTotalCost(o.getTotalCost()-o.getItemList().get(n).getPrice());
-                                    o.getItemList().remove(n);
-                                }
-                                else
-                                {
-                                    int getqty = o.getItemList().get(n).getQty();
-                                    double totalp = o.getItemList().get(n).getPrice();
-                                    o.getItemList().get(n).setQty(getqty-qtyRemove);
-                                    o.getItemList().get(n).setPrice(totalp-qtyRemove*(totalp/getqty));
-                                    o.setTotalCost(o.getTotalCost() - qtyRemove*(totalp/getqty));
-                                }
+                                 }
 
                             }
-                            System.out.println("Successfully removed");
-                            sc.nextLine();
-
-                        }
-                        System.out.print("Select Add(A)/Remove(R)/Quit(Q) items for order #" + takeAwayOrderList.get(index).getOrderid() + ":");
-                        c = sc.nextLine().toLowerCase().charAt(0);
-                    } while (c != 'q');
-                } else {
-                    for (int i = 0; i < dineInOrderList.size(); i++) {
-                        if (dineInOrderList.get(i).getOrderid().equals(choice)) {
-                            index = i;
-                            break;
-                        }
-                    }
-                    if (index == -1) {
-                        System.out.println("Invalid Order ID please try again");
-                        continue;
-                    }
-                    System.out.print("Select Add(A)/Remove(R) items for order #" + dineInOrderList.get(index).getOrderid() + ":");
-                    char c = sc.nextLine().toLowerCase().charAt(0);
-                    do {
-                        x = 0;
-                        if (c == 'a') {
-                            System.out.print("Select: Promotional set(P), MainCourse(M), Sides(S), Drinks(D):");
-                            char l = sc.nextLine().toLowerCase().charAt(0);
-                            switch (l) {
-
-                                case 'm':
-                                    for (MainCourse m : mainCoursesList)
-                                        System.out.println(++x + ") " + m.getName() + " $" + m.getPrice());
-                                    System.out.print("Select your MainCourse:");
-                                    int m = sc.nextInt() - 1;
-                                    System.out.print("Enter qty:");
-                                    int q = sc.nextInt();
-                                    Order o = dineInOrderList.get(index);
-                                    o.setTotalCost(o.getTotalCost() + (mainCoursesList.get(m).getPrice() * q));
-                                    o.getItemList().add(new OrderItems(q, mainCoursesList.get(m).getPrice(),
-                                            mainCoursesList.get(m).getName()));
-                                    break;
-                                case 's':
-                                    for (Sides s : sidesList)
-                                        System.out.println(++x + ") " + s.getName() + " $" + s.getPrice());
-                                    System.out.print("Select your Side:");
-                                    int s = sc.nextInt() - 1;
-                                    System.out.print("Enter qty:");
-                                    q = sc.nextInt();
-                                    o = dineInOrderList.get(index);
-                                    o.setTotalCost(o.getTotalCost() + (sidesList.get(s).getPrice() * q));
-                                    o.getItemList().add(new OrderItems(q, sidesList.get(s).getPrice(),
-                                            sidesList.get(s).getName()));
-                                    break;
-                                case 'd':
-                                    for (Drinks d : drinksList)
-                                        System.out.println(++x + ") " + d.getName() + " $" + d.getPrice());
-                                    System.out.print("Select your drink:");
-                                    int d = sc.nextInt() - 1;
-                                    System.out.print("Enter qty:");
-                                    q = sc.nextInt();
-                                    o = dineInOrderList.get(index);
-                                    o.setTotalCost(o.getTotalCost() + (drinksList.get(d).getPrice() * q));
-                                    o.getItemList().add(new OrderItems(q, drinksList.get(d).getPrice(),
-                                            drinksList.get(d).getName()));
-                                    break;
-                                case 'p':
-                                    for (PromotionalSet p : promotionalSetList) {
-                                        System.out.println(++x + ") " + p.getName() + " $" + p.getPrice());
-                                        System.out.println(p.getDesription());
-                                    }
-                                    System.out.print("Select your promotional set:");
-                                    int p = sc.nextInt() - 1;
-                                    System.out.print("Enter qty:");
-                                    q = sc.nextInt();
-                                    o = dineInOrderList.get(index);
-                                    o.setTotalCost(o.getTotalCost() + (promotionalSetList.get(p).getPrice() * q));
-                                    o.getItemList().add(new OrderItems(q, promotionalSetList.get(p).getPrice(),
-                                            promotionalSetList.get(p).getName()));
-                                    break;
-
-                            }
-                            System.out.println("Successfully added!");
-
-
-                        }
-                        else if(c=='r')
-                        {
-                            int count =0;
-                            int qtyRemove =1;
-                            Order o = dineInOrderList.get(index);
-                            if(o.getItemList().size()==0)
+                            if(qtyRemove==o.getItemList().get(n).getQty())
                             {
-                                System.out.println("Order ID# " + o.getOrderid() + " is empty!");
+                                o.setTotalCost(o.getTotalCost()-o.getItemList().get(n).getPrice());
+                                o.getItemList().remove(n);
                             }
                             else
                             {
-                                for (OrderItems item : o.getItemList()) {
-                                    System.out.printf(++count + ") %s Qty: %d",item.getItemName(),item.getQty());
-                                    System.out.println();
+                                int getqty = o.getItemList().get(n).getQty();
+                                double totalp = o.getItemList().get(n).getPrice();
+                                o.getItemList().get(n).setQty(getqty-qtyRemove);
+                                o.getItemList().get(n).setPrice(totalp-qtyRemove*(totalp/getqty));
+                                o.setTotalCost(o.getTotalCost() - qtyRemove*(totalp/getqty));
+                            }
+
+                        }
+                        System.out.println("Successfully removed");
+                        sc.nextLine();
+
+                    }
+                    System.out.print("Select Add(A)/Remove(R)/Quit(Q) items for order #" + takeAwayOrderList.get(index).getOrderid() + ":");
+                    c = sc.nextLine().toLowerCase().charAt(0);
+                } while (c != 'q');
+            } else {
+                for (int i = 0; i < dineInOrderList.size(); i++) {
+                    if (dineInOrderList.get(i).getOrderid().equals(choice)) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index == -1) {
+                    System.out.println("Invalid Order ID please try again");
+                    continue;
+                }
+                System.out.print("Select Add(A)/Remove(R) items for order #" + dineInOrderList.get(index).getOrderid() + ":");
+                char c = sc.nextLine().toLowerCase().charAt(0);
+                do {
+                    x = 0;
+                    if (c == 'a') {
+                        System.out.print("Select: Promotional set(P), MainCourse(M), Sides(S), Drinks(D):");
+                        char l = sc.nextLine().toLowerCase().charAt(0);
+                        switch (l) {
+
+                            case 'm':
+                                for (MainCourse m : mainCoursesList)
+                                    System.out.println(++x + ") " + m.getName() + " $" + m.getPrice());
+                                System.out.print("Select your MainCourse:");
+                                int m = sc.nextInt() - 1;
+                                System.out.print("Enter qty:");
+                                int q = sc.nextInt();
+                                Order o = dineInOrderList.get(index);
+                                o.setTotalCost(o.getTotalCost() + (mainCoursesList.get(m).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, mainCoursesList.get(m).getPrice(),
+                                        mainCoursesList.get(m).getName()));
+                                break;
+                            case 's':
+                                for (Sides s : sidesList)
+                                    System.out.println(++x + ") " + s.getName() + " $" + s.getPrice());
+                                System.out.print("Select your Side:");
+                                int s = sc.nextInt() - 1;
+                                System.out.print("Enter qty:");
+                                q = sc.nextInt();
+                                o = dineInOrderList.get(index);
+                                o.setTotalCost(o.getTotalCost() + (sidesList.get(s).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, sidesList.get(s).getPrice(),
+                                        sidesList.get(s).getName()));
+                                break;
+                            case 'd':
+                                for (Drinks d : drinksList)
+                                    System.out.println(++x + ") " + d.getName() + " $" + d.getPrice());
+                                System.out.print("Select your drink:");
+                                int d = sc.nextInt() - 1;
+                                System.out.print("Enter qty:");
+                                q = sc.nextInt();
+                                o = dineInOrderList.get(index);
+                                o.setTotalCost(o.getTotalCost() + (drinksList.get(d).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, drinksList.get(d).getPrice(),
+                                        drinksList.get(d).getName()));
+                                break;
+                            case 'p':
+                                for (PromotionalSet p : promotionalSetList) {
+                                    System.out.println(++x + ") " + p.getName() + " $" + p.getPrice());
+                                    System.out.println(p.getDesription());
                                 }
-                                System.out.print("Select item to be removed:");
-                                int n = sc.nextInt()-1;
-                                if(o.getItemList().get(n).getQty() > 1)
+                                System.out.print("Select your promotional set:");
+                                int p = sc.nextInt() - 1;
+                                System.out.print("Enter qty:");
+                                q = sc.nextInt();
+                                o = dineInOrderList.get(index);
+                                o.setTotalCost(o.getTotalCost() + (promotionalSetList.get(p).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, promotionalSetList.get(p).getPrice(),
+                                        promotionalSetList.get(p).getName()));
+                                break;
+
+                        }
+                        System.out.println("Successfully added!");
+
+
+                    }
+                    else if(c=='r')
+                    {
+                        int count =0;
+                        int qtyRemove =1;
+                        Order o = dineInOrderList.get(index);
+                        if(o.getItemList().size()==0)
+                        {
+                            System.out.println("Order ID# " + o.getOrderid() + " is empty!");
+                        }
+                        else
+                        {
+                            for (OrderItems item : o.getItemList()) {
+                                System.out.printf(++count + ") %s Qty: %d",item.getItemName(),item.getQty());
+                                System.out.println();
+                            }
+                            System.out.print("Select item to be removed:");
+                            int n = sc.nextInt()-1;
+                            if(o.getItemList().get(n).getQty() > 1)
+                            {
+                                System.out.print("Enter number of qty to remove:");
+                                qtyRemove = sc.nextInt();
+                                while(qtyRemove > o.getItemList().get(n).getQty())
                                 {
+                                    System.out.println("qty cannot be greater than " + o.getItemList().get(n).getQty());
                                     System.out.print("Enter number of qty to remove:");
                                     qtyRemove = sc.nextInt();
-                                    while(qtyRemove > o.getItemList().get(n).getQty())
-                                    {
-                                        System.out.println("qty cannot be greater than " + o.getItemList().get(n).getQty());
-                                        System.out.print("Enter number of qty to remove:");
-                                        qtyRemove = sc.nextInt();
-                                    }
-
-                                }
-                                if(qtyRemove==o.getItemList().get(n).getQty())
-                                {
-                                    o.setTotalCost(o.getTotalCost()-o.getItemList().get(n).getPrice());
-                                    o.getItemList().remove(n);
-                                }
-                                else
-                                {
-                                    int getqty = o.getItemList().get(n).getQty();
-                                    double totalp = o.getItemList().get(n).getPrice();
-                                    o.getItemList().get(n).setQty(getqty-qtyRemove);
-                                    o.getItemList().get(n).setPrice(totalp-qtyRemove*(totalp/getqty));
-                                    o.setTotalCost(o.getTotalCost() - qtyRemove*(totalp/getqty));
                                 }
 
                             }
-                            System.out.println("Successfully removed");
-                            //sc.nextLine();
-                        }
-                        sc.nextLine();
-                        System.out.print("Select Add(A)/Remove(R)/Quit(Q) items for order #" + dineInOrderList.get(index).getOrderid() + ":");
-                        c = sc.nextLine().toLowerCase().charAt(0);
-                    } while (c != 'q');
+                            if(qtyRemove==o.getItemList().get(n).getQty())
+                            {
+                                o.setTotalCost(o.getTotalCost()-o.getItemList().get(n).getPrice());
+                                o.getItemList().remove(n);
+                            }
+                            else
+                            {
+                                int getqty = o.getItemList().get(n).getQty();
+                                double totalp = o.getItemList().get(n).getPrice();
+                                o.getItemList().get(n).setQty(getqty-qtyRemove);
+                                o.getItemList().get(n).setPrice(totalp-qtyRemove*(totalp/getqty));
+                                o.setTotalCost(o.getTotalCost() - qtyRemove*(totalp/getqty));
+                            }
 
-                }
+                        }
+                        System.out.println("Successfully removed");
+                        //sc.nextLine();
+                    }
+                    sc.nextLine();
+                    System.out.print("Select Add(A)/Remove(R)/Quit(Q) items for order #" + dineInOrderList.get(index).getOrderid() + ":");
+                    c = sc.nextLine().toLowerCase().charAt(0);
+                } while (c != 'q');
+
             }
         }
+    }
 }
 
