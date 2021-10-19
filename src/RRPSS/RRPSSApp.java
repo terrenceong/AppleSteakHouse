@@ -346,25 +346,32 @@ public class RRPSSApp {
     }
     
     private static void printOrderInvoice(Invoice i) {
-    	System.out.println("===========CZ2002 Cafe===========");
+    	System.out.println("========Apple Steak House========");
+    	System.out.print("Staff Name: ");
+    	System.out.println(i.getS().getName());
+    	System.out.print("Order ID: ");
+    	System.out.println(i.getOrderid());
+    	System.out.print("Order Date: ");
+    	System.out.println(i.getOrderDate());
+    	
     	System.out.println("---------------------------------");
     	for (OrderItems item : i.getItemList()) {
             System.out.printf(item.getQty() + " %-25s %.2f", item.getItemName(), item.getPrice());
             System.out.println();
         }
     	System.out.println("---------------------------------");
-    	System.out.printf("%-25s %.2f","SUBTOTAL:", i.getSubTotalCost());
+    	System.out.printf("%-27s %.2f","SUBTOTAL:", i.getSubTotalCost());
         System.out.println();
-    	System.out.printf("%-25s %.2f","10% SERVICE CHARGE:", i.getServiceCharge());
+    	System.out.printf("%-27s %.2f","10% SERVICE CHARGE:", i.getServiceCharge());
         System.out.println();
-    	System.out.printf("%-25s %.2f","7% GST:", i.getGst());
+    	System.out.printf("%-27s %.2f","7% GST:", i.getGst());
         System.out.println();
     	if(i.getDiscount()!=0) {
-    	    System.out.printf("%-25s %.2f","5% MEMBER DISCOUNT:", i.getDiscount());
+    	    System.out.printf("%-27s %.2f","5% MEMBER DISCOUNT:", i.getDiscount());
             System.out.println();
     	}
     	System.out.println("_________________________________");
-    	System.out.printf("%-25s %.2f","TOTAL DUE:", i.getTotalCost());
+    	System.out.printf("%-27s %.2f","TOTAL DUE:", i.getTotalCost());
         System.out.println();
     	System.out.println("---------------------------------");
     	System.out.println("-Thank you for ordering with us!-");
