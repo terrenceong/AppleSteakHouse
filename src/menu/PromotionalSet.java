@@ -1,5 +1,4 @@
-package RRPSS;
-
+package menu;
 
 public class PromotionalSet {
     private MainCourse main;
