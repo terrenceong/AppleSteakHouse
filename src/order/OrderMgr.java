@@ -17,14 +17,14 @@ import reservation.Table;
 
 public class OrderMgr {
     private static Scanner sc = new Scanner(System.in);
-    static List<MainCourse> mainCoursesList = RRPSS.RRPSSApp.mainCoursesList;
-    static List<Sides> sidesList = RRPSS.RRPSSApp.sidesList;
-    static List<Drinks> drinksList = RRPSS.RRPSSApp.drinksList;
-    static List<PromotionalSet> promotionalSetList = RRPSS.RRPSSApp.promotionalSetList;
-    static List<Order> dineInOrderList = RRPSS.RRPSSApp.dineInOrderList;
-    static List<Order> takeAwayOrderList = RRPSS.RRPSSApp.takeAwayOrderList;
-    static List<Order> completedOrderList = RRPSS.RRPSSApp.completedOrderList;
-    static List<Table> tableList = RRPSS.RRPSSApp.tableList;
+    static List<MainCourse> mainCoursesList = RRPSSApp.mainCoursesList;
+    static List<Sides> sidesList = RRPSSApp.sidesList;
+    static List<Drinks> drinksList = RRPSSApp.drinksList;
+    static List<PromotionalSet> promotionalSetList = RRPSSApp.promotionalSetList;
+    static List<Order> dineInOrderList = RRPSSApp.dineInOrderList;
+    static List<Order> takeAwayOrderList = RRPSSApp.takeAwayOrderList;
+    static List<Order> completedOrderList = RRPSSApp.completedOrderList;
+    static List<Table> tableList = RRPSSApp.tableList;
 
     public static void showOrderOptions(Staff s) {
         boolean quit = false;

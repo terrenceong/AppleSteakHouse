@@ -7,10 +7,10 @@ import RRPSS.RRPSSApp;
 
 public class MenuMgr {
     private static Scanner sc = new Scanner(System.in);
-    static List<MainCourse> mainCoursesList = RRPSS.RRPSSApp.mainCoursesList;
-    static List<Sides> sidesList = RRPSS.RRPSSApp.sidesList;
-    static List<Drinks> drinksList = RRPSS.RRPSSApp.drinksList;
-    static List<PromotionalSet> promotionalSetList = RRPSS.RRPSSApp.promotionalSetList;
+    static List<MainCourse> mainCoursesList = RRPSSApp.mainCoursesList;
+    static List<Sides> sidesList = RRPSSApp.sidesList;
+    static List<Drinks> drinksList = RRPSSApp.drinksList;
+    static List<PromotionalSet> promotionalSetList = RRPSSApp.promotionalSetList;
 
     public static void showMenuOptions() {
         boolean quit = false;

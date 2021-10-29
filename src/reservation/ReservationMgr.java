@@ -4,17 +4,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
+import RRPSS.RRPSSApp;
 import order.Order;
 import reservation.Reservation;
 import reservation.Table;
 
 public class ReservationMgr {
     private static Scanner sc = new Scanner(System.in);
-    static List<Order> dineInOrderList = RRPSS.RRPSSApp.dineInOrderList;
-    static List<Order> takeAwayOrderList = RRPSS.RRPSSApp.takeAwayOrderList;
-    static List<Order> completedOrderList = RRPSS.RRPSSApp.completedOrderList;
-    static List<Table> tableList = RRPSS.RRPSSApp.tableList;
-    static List<Reservation> reservationList = RRPSS.RRPSSApp.reservationList;
+    static List<Order> dineInOrderList = RRPSSApp.dineInOrderList;
+    static List<Order> takeAwayOrderList =RRPSSApp.takeAwayOrderList;
+    static List<Order> completedOrderList = RRPSSApp.completedOrderList;
+    static List<Table> tableList = RRPSSApp.tableList;
+    static List<Reservation> reservationList = RRPSSApp.reservationList;
 
     public static void showReservationOptions() {
         boolean quit = false;
