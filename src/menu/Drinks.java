@@ -1,11 +1,11 @@
-package RRPSS;
+package menu;
 
-public class Sides {
+public class Drinks {
     private String name;
     private double price;
     private String description;
 
-    public Sides(String name, double price, String description) {
+    public Drinks(String name, double price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;

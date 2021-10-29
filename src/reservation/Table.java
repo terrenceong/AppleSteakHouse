@@ -1,4 +1,4 @@
-package RRPSS;
+package reservation;
 
 public class Table {
 	private int tableId;
