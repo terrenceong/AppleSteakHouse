@@ -10,6 +10,7 @@ public class Reservation {
 	private int contact;
 	private Table table;
 
+
 	public Reservation(LocalDateTime dateReserved, LocalDateTime dateCreated, int pax, String name, int contact,Table table) {
 		super();
 		this.dateReserved = dateReserved;
