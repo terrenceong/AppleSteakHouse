@@ -292,6 +292,8 @@ public class OrderMgr {
                             {
                                 o.setTotalCost(o.getTotalCost()-o.getItemList().get(n).getPrice());
                                 o.getItemList().remove(n);
+                                System.out.println("Successfully removed");
+                                sc.nextLine();
                             }
                             else
                             {
@@ -300,11 +302,12 @@ public class OrderMgr {
                                 o.getItemList().get(n).setQty(getqty-qtyRemove);
                                 o.getItemList().get(n).setPrice(totalp-qtyRemove*(totalp/getqty));
                                 o.setTotalCost(o.getTotalCost() - qtyRemove*(totalp/getqty));
+                                System.out.println("Successfully removed");
+                                sc.nextLine();
                             }
 
                         }
-                        System.out.println("Successfully removed");
-                        sc.nextLine();
+
 
                     }
                     System.out.print("Select Add(A)/Remove(R)/Quit(Q) items for order #" + takeAwayOrderList.get(index).getOrderid() + ":");
@@ -383,6 +386,7 @@ public class OrderMgr {
 
                         }
                         System.out.println("Successfully added!");
+                        sc.nextLine();
 
 
                     }
@@ -419,6 +423,8 @@ public class OrderMgr {
                             {
                                 o.setTotalCost(o.getTotalCost()-o.getItemList().get(n).getPrice());
                                 o.getItemList().remove(n);
+                                System.out.println("Successfully removed");
+                                sc.nextLine();
                             }
                             else
                             {
@@ -427,13 +433,15 @@ public class OrderMgr {
                                 o.getItemList().get(n).setQty(getqty-qtyRemove);
                                 o.getItemList().get(n).setPrice(totalp-qtyRemove*(totalp/getqty));
                                 o.setTotalCost(o.getTotalCost() - qtyRemove*(totalp/getqty));
+                                System.out.println("Successfully removed");
+                                sc.nextLine();
                             }
 
                         }
-                        System.out.println("Successfully removed");
+                       // System.out.println("Successfully removed");
                         //sc.nextLine();
                     }
-                    sc.nextLine();
+
                     System.out.print("Select Add(A)/Remove(R)/Quit(Q) items for order #" + dineInOrderList.get(index).getOrderid() + ":");
                     c = sc.nextLine().toLowerCase().charAt(0);
                 } while (c != 'q');
