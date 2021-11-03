@@ -14,6 +14,7 @@ import menu.PromotionalSet;
 import menu.Sides;
 import order.Order;
 import order.OrderItems;
+import reservation.ReservationMgr;
 import reservation.Table;
 
 public class InvoiceMgr {
@@ -39,6 +40,7 @@ public class InvoiceMgr {
             System.out.println("4 -> Quit");
             System.out.print("Enter your choice:");
             int choice = sc.nextInt();
+            ReservationMgr.checkExpiredReservations();
             switch(choice)
             {
 	            case 1: closeOrderInvoice();break;

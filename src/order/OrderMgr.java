@@ -12,6 +12,7 @@ import menu.Drinks;
 import menu.MainCourse;
 import menu.PromotionalSet;
 import menu.Sides;
+import reservation.ReservationMgr;
 import reservation.Table;
 
 
@@ -37,6 +38,7 @@ public class OrderMgr {
             System.out.println("4 -> Quit");
             System.out.print("Enter your choice:");
             int choice = sc.nextInt();
+            ReservationMgr.checkExpiredReservations();
             switch(choice)
             {
                 case 1: createOrder(s);break;

@@ -29,6 +29,7 @@ public class ReservationMgr {
             System.out.println("5 -> Quit");
             System.out.print("Enter your choice:");
             int choice = sc.nextInt();
+            ReservationMgr.checkExpiredReservations();
             switch(choice)
             {
 	            case 1: createReservation();break;

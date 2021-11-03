@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import RRPSS.RRPSSApp;
+import reservation.ReservationMgr;
 
 public class MenuMgr {
     private static Scanner sc = new Scanner(System.in);
@@ -23,6 +24,7 @@ public class MenuMgr {
             System.out.println("4 -> Quit");
             System.out.print("Enter your choice:");
             int choice = sc.nextInt();
+            ReservationMgr.checkExpiredReservations();
             switch(choice)
             {
                 case 1: printFoodMenu();break;
