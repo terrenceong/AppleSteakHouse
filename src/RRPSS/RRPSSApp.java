@@ -35,7 +35,7 @@ public class RRPSSApp {
     
     public static void main(String[] args) {
     	try {
-            // write your code here
+            // write your code here 
             Staff s = new Staff();
             enterStaffInfo(s);
             System.out.println("=======WELCOME TO APPLE STEAK HOUSE STAFF MENU=======");
