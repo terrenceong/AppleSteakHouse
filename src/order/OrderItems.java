@@ -1,4 +1,4 @@
-package RRPSS;
+package order;
 
 public class OrderItems {
     private int qty;
