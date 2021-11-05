@@ -37,7 +37,7 @@ public class InvoiceMgr {
             System.out.println("1 -> Print order invoice");
             System.out.println("2 -> View order invoices");
             System.out.println("3 -> Print sale revenue report by period");
-            System.out.println("4 -> Quit");
+            System.out.println("4 -> Return to main");
             System.out.print("Enter your choice:");
             int choice = sc.nextInt();
             ReservationMgr.checkExpiredReservations();

@@ -15,18 +15,52 @@ import menu.Sides;
 import reservation.ReservationMgr;
 import reservation.Table;
 
-
+/**
+ * Control class of order options.
+ *
+ * @author Terrence
+ * @version 1.0
+ * @since 2021-05-11
+ */
 public class OrderMgr {
     private static Scanner sc = new Scanner(System.in);
+    /**
+     * Storing all main course object.
+     */
     static List<MainCourse> mainCoursesList = RRPSSApp.mainCoursesList;
+    /**
+     * Storing all side dish object.
+     */
     static List<Sides> sidesList = RRPSSApp.sidesList;
+    /**
+     * Storing all side dish object.
+     */
     static List<Drinks> drinksList = RRPSSApp.drinksList;
+    /**
+     * Storing all promotional set object.
+     */
     static List<PromotionalSet> promotionalSetList = RRPSSApp.promotionalSetList;
+    /**
+     * Storing all current dining in order.
+     */
     static List<Order> dineInOrderList = RRPSSApp.dineInOrderList;
+    /**
+     * Storing all pending take away orders.
+     */
     static List<Order> takeAwayOrderList = RRPSSApp.takeAwayOrderList;
+    /**
+     * Log completed orders.
+     */
     static List<Order> completedOrderList = RRPSSApp.completedOrderList;
+    /**
+     * Tables inside this restaurant.
+     */
     static List<Table> tableList = RRPSSApp.tableList;
-
+    /**
+     * Display order options.
+     * This method involve directing users to the right option within the class.
+     * @param s reference of staff that is using this application
+     */
     public static void showOrderOptions(Staff s) {
         boolean quit = false;
         do
@@ -35,7 +69,7 @@ public class OrderMgr {
             System.out.println("1 -> Create order");
             System.out.println("2 -> View order");
             System.out.println("3 -> Add/Remove order item/s to/from order ");
-            System.out.println("4 -> Quit");
+            System.out.println("4 -> Return to main");
             System.out.print("Enter your choice:");
             int choice = sc.nextInt();
             ReservationMgr.checkExpiredReservations();
@@ -48,7 +82,10 @@ public class OrderMgr {
             }
         } while(!quit);
     }
-    
+    /**
+     * Logic and flow to create order.
+     * @param s reference of staff object that is creating this order.
+     */
     private static void createOrder(Staff s) {
         sc.nextLine();
         Random rdm = new Random();
@@ -82,7 +119,9 @@ public class OrderMgr {
         }
         System.out.println("Order ID #" + orderID + " created on " + dateTime + " by staffNo#" + s.getID());
     }
-
+    /**
+     * Display order information that currently is in the system.
+     */
     private static void viewOrder() {
         if (dineInOrderList.size() == 0 && takeAwayOrderList.size() == 0) {
             System.out.println("There are no orders right now");
@@ -162,7 +201,10 @@ public class OrderMgr {
             }
         }
     }
-    
+    /**
+     * Staff can customize order by adding new items, updating existing item
+     * and remove item from order.
+     */
     private static void editOrders()
     {
         int index = -1;

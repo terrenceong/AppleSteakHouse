@@ -33,11 +33,11 @@ class TestOrder {
 		assertEquals(10,testdineinOrder.get(0).getItemList().get(1).getPrice());
 		assertEquals(20,testdineinOrder.get(0).getItemList().get(2).getPrice());
 		assertEquals("UNAVAILABLE",table.getAvailability());
-		
-		
-		
-		
-		
+
+
+
+
+
 	}
 
 }

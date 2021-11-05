@@ -26,7 +26,7 @@ public class ReservationMgr {
             System.out.println("2 -> Check/Remove reservation booking");
             System.out.println("3 -> Check table availability");
             System.out.println("4 -> Set table availability");
-            System.out.println("5 -> Quit");
+            System.out.println("5 -> Return to main");
             System.out.print("Enter your choice:");
             int choice = sc.nextInt();
             ReservationMgr.checkExpiredReservations();

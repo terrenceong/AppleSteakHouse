@@ -18,19 +18,55 @@ import reservation.Reservation;
 import reservation.Table;
 import reservation.ReservationMgr;
 
-
+/**
+ * Boundary Class of the restaurant reservation Application.
+ *
+ * @author Terrence
+ * @version 1.0
+ * @since 2021-05-11
+ */
 
 public class RRPSSApp {
     private static Scanner sc = new Scanner(System.in);
+    /**
+     * Storing all main course object.
+     */
     public static List<MainCourse> mainCoursesList = new ArrayList<>();
+    /**
+     * Storing all side dish object.
+     */
     public static List<Sides> sidesList = new ArrayList<>();
+    /**
+     * Storing all drink object.
+     */
     public static List<Drinks> drinksList = new ArrayList<>();
+    /**
+     * Storing all promotional set object.
+     */
     public static List<PromotionalSet> promotionalSetList = new ArrayList<>();
+    /**
+     * Storing all current dining in order.
+     */
     public static List<Order> dineInOrderList = new ArrayList<>();
+    /**
+     * Storing all pending take away orders.
+     */
     public static List<Order> takeAwayOrderList = new ArrayList<>();
+    /**
+     * Log completed orders.
+     */
     public static List<Order> completedOrderList = new ArrayList<>();
+    /**
+     * Tables inside this restaurant.
+     */
     public static List<Table> tableList = new ArrayList<>();
+    /**
+     * List of reservation.
+     */
     public static List<Reservation> reservationList = new ArrayList<>();
+    /**
+     * List of invoice.
+     */
     public static List<Invoice> invoiceList = new ArrayList<>();
     
     public static void main(String[] args) {
@@ -69,7 +105,10 @@ public class RRPSSApp {
     		System.out.println(e);
     	}
     }
-
+    /**
+     * Enter staff information before proceeding on the restaurant application.
+     * @param s Staff object.
+     */
     public static void enterStaffInfo(Staff s) {
         System.out.println("=======WELCOME TO APPLE STEAK HOUSE STAFF MENU=======");
         System.out.print("Enter staff name:");

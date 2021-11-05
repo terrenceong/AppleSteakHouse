@@ -1,18 +1,38 @@
 package menu;
-
 import java.util.List;
 import java.util.Scanner;
 
 import RRPSS.RRPSSApp;
 import reservation.ReservationMgr;
-
+/**
+ * Control class of menu options.
+ *
+ * @author Terrence
+ * @version 1.0
+ * @since 2021-05-11
+ */
 public class MenuMgr {
     private static Scanner sc = new Scanner(System.in);
+    /**
+     * Storing all main course object.
+     */
     static List<MainCourse> mainCoursesList = RRPSSApp.mainCoursesList;
+    /**
+     * Storing all side dish object.
+     */
     static List<Sides> sidesList = RRPSSApp.sidesList;
+    /**
+     * Storing all drink object.
+     */
     static List<Drinks> drinksList = RRPSSApp.drinksList;
+    /**
+     * Storing all promotional set object.
+     */
     static List<PromotionalSet> promotionalSetList = RRPSSApp.promotionalSetList;
-
+    /**
+     * Display menu options.
+     * This method involve directing users to the right option within the class.
+     */
     public static void showMenuOptions() {
         boolean quit = false;
         do
@@ -21,7 +41,7 @@ public class MenuMgr {
             System.out.println("1 -> Print restaurant menu item");
             System.out.println("2 -> Create/Update/Remove menu item");
             System.out.println("3 -> Create/Update/Remove promotion");
-            System.out.println("4 -> Quit");
+            System.out.println("4 -> Return to main");
             System.out.print("Enter your choice:");
             int choice = sc.nextInt();
             ReservationMgr.checkExpiredReservations();
@@ -35,7 +55,9 @@ public class MenuMgr {
         } while(!quit);
     }
     
-    
+    /**
+     * Initialize and create default objects that are suppose to be in the menu.
+     */
     public static void initializeFoodMenu() {
     	
         mainCoursesList.add(new MainCourse("Apple House's Steak", 19.90, "Classical Tenderloin top with mushroom apple cinder and mushroom sauce"));
@@ -54,7 +76,9 @@ public class MenuMgr {
         promotionalSetList.add(new PromotionalSet("T-bone's special", mainCoursesList.get(1), sidesList.get(0), drinksList.get(1)));
         promotionalSetList.add(new PromotionalSet("Fishy meal", mainCoursesList.get(3), sidesList.get(1), drinksList.get(0)));
     }
-    
+    /**
+     * Prints the entire restaurant menu.
+     */
     private static void printFoodMenu()
     {
         int i =0;
@@ -73,7 +97,10 @@ public class MenuMgr {
             System.out.println(++i + ") " + d.getName() + ": $" + d.getPrice() + "\n" + d.getDescription());
     }
 
-
+    /**
+     * Staff can customize menu by adding new items, updating existing item
+     * and remove item from menu.
+     */
     private static void editFoodMenu() {
         int i = 0;
         sc.nextLine();
@@ -225,7 +252,11 @@ public class MenuMgr {
                 System.out.println("Successfully updated!");
         }
     }
-
+    /**
+     * Staff can customize promotional set by adding new promotional set, 
+     * updating existing promotional set
+     * and remove promotional set from menu. 
+     */
     private static void editPromotionalSet() {
         int i = 0;
         sc.nextLine();
