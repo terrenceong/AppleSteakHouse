@@ -5,7 +5,13 @@ import reservation.ReservationMgr;
 import java.util.Scanner;
 
 import static order.OrderMgr.*;
-
+/**
+ * Order user interface.
+ *
+ * @author Terrence
+ * @version 1.0
+ * @since 2021-05-11
+ */
 public class OrderUI {
     static Scanner sc = new Scanner(System.in);
     /**

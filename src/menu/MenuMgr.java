@@ -308,19 +308,31 @@ public class MenuMgr {
 
         }
     }
-
+     /**
+      * Get a list of main course objects.
+      * @return a list of main course objects.
+      */
     public static List<MainCourse> getMainCoursesList() {
         return mainCoursesList;
     }
-
+    /**
+     * Get list of side dish objects.
+     * @return a list of side dish objects.
+     */
     public static List<Sides> getSidesList() {
         return sidesList;
     }
-
+    /**
+     * Get list of drinks objects.
+     * @return a list of drinks objects.
+     */
     public static List<Drinks> getDrinksList() {
         return drinksList;
     }
-
+    /**
+     * Get list of promotional set objects.
+     * @return a list of promotional set objects.
+     */
     public static List<PromotionalSet> getPromotionalSetList() {
         return promotionalSetList;
     }

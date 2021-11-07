@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 import invoice.InvoiceUI;
 import menu.*;
-import order.OrderUI;
-import reservation.ReservationUI;
-import reservation.ReservationMgr;
+import order.*;
+import reservation.*;
+import reservation.*;
 
 /**
  * Boundary Class of the restaurant reservation Application.
@@ -46,8 +46,8 @@ public class RRPSSApp {
                 switch(choice)
                 {
 	                case 1: MenuUI.showMenuOptions();break;
-	                case 2: OrderUI.showOrderOptions(s);;break;
-	                case 3: ReservationUI.showReservationOptions();;break;
+	                case 2: OrderUI.showOrderOptions(s);break;
+	                case 3: ReservationUI.showReservationOptions();break;
 	                case 4: InvoiceUI.showInvoiceOptions();;break;
                     default: quit = true;
                 }

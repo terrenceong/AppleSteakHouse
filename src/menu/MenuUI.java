@@ -6,7 +6,13 @@ import java.util.Scanner;
 import menu.MenuMgr.*;
 
 import static menu.MenuMgr.*;
-
+/**
+ * Menu user interface.
+ *
+ * @author Terrence
+ * @version 1.0
+ * @since 2021-05-11
+ */
 public class MenuUI {
      static Scanner sc = new Scanner(System.in);
     /**

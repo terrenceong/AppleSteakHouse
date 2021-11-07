@@ -471,15 +471,24 @@ public class OrderMgr {
             }
         }
     }
-
+     /**
+      * Get a list of dine in orders created.
+      * @return a list of dine in orders.
+      */
     public static List<Order> getDineInOrderList() {
         return dineInOrderList;
     }
-
+    /**
+     * Get a list of take away orders created.
+     * @return a list of take away orders.
+     */
     public static List<Order> getTakeAwayOrderList() {
         return takeAwayOrderList;
     }
-
+    /**
+     * Get a list of completed orders
+     * @return a list of completed orders.
+     */
     public static List<Order> getCompletedOrderList() {
         return completedOrderList;
     }
