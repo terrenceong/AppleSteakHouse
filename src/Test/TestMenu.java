@@ -16,9 +16,9 @@ class TestMenu {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		testmain = RRPSSApp.mainCoursesList;
-		testdrink =RRPSSApp.drinksList;
-		testsides =RRPSSApp.sidesList;
+		testmain = MenuMgr.getMainCoursesList();
+		testdrink =MenuMgr.getDrinksList();
+		testsides =MenuMgr.getSidesList();
 	}
 
 	@Test

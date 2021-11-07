@@ -12,11 +12,10 @@ import reservation.*;
 class TestOrder {
 
 	private static List<Order> testdineinOrder;
-	//private static List<Order> testtakeawayOrder;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		testdineinOrder = RRPSS.RRPSSApp.dineInOrderList;
-		//testtakeawayOrder = RRPSS.RRPSSApp.takeAwayOrderList;
+		testdineinOrder = OrderMgr.getDineInOrderList();
+
 	}
 
 	@Test

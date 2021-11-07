@@ -6,7 +6,7 @@ package menu;
  * @version 1.0
  * @since 2021-05-11
  */
-public class PromotionalSet {
+public class PromotionalSet extends FoodItem{
 	/**
 	 * Main course object.
 	 */
@@ -20,18 +20,6 @@ public class PromotionalSet {
      */
     private Drinks drink;
     /**
-     * Name of promotional set.
-     */
-    private String name;
-    /**
-     * Price of promotional set.
-     */
-    private double price;
-    /**
-     * Description of promotional set.
-     */
-    private String desription;
-    /**
      * Create a new promotional object with its set name and combination of main,sides,drink
      * with a overall discounted price.
      * @param name this promotional set name.
@@ -40,12 +28,12 @@ public class PromotionalSet {
      * @param drink this drink object that is included in this set.
      */
     public PromotionalSet(String name,MainCourse main, Sides side, Drinks drink) {
+        super(name,0.0,"default");
         this.main = main;
         this.side = side;
         this.drink = drink;
-        this.name = name;
-        this.price = Math.floor((main.getPrice() + drink.getPrice() + side.getPrice())*0.9);
-        this.desription = main.getName() +"\n" + side.getName() + "\n" + drink.getName();
+        this.setPrice();
+        this.setDesription();
 
     }
     /**
@@ -91,45 +79,44 @@ public class PromotionalSet {
         this.drink = drink;
     }
     /**
-     * Gets the name of this promotional set.
-     * @return this promotional set name.
-     */
-    public String getName() {
-        return name;
-    }
-    /**
-     * Changes the name of this promotional set.
-     * @param name new name for this promotional set.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-    /**
-     * Gets the price of this promotional set.
-     * @return this promotional set price.
-     */
-    public double getPrice() {
-        return price;
-    }
-    /**
      * Update the price of this promotional set.
      * Cost of promotional set = floor((price of main + price of side + price of drink)*0.9)
      */
     public void setPrice() {
-        this.price = Math.floor((main.getPrice() + drink.getPrice() + side.getPrice())*0.9);
-    }
-    /**
-     * Gets the description of this promotional set.
-     * @return this promotional set description.
-     */
-    public String getDesription() {
-        return desription;
+        double price = Math.floor((main.getPrice() + drink.getPrice() + side.getPrice())*0.9);
+        super.setPrice(price);
     }
     /**
      * Update the description of this promotional set.
      * Description of this promotional set lists down the items that belongs to this promotional set.
      */
     public void setDesription() {
-        this.desription = main.getName() +"\n" + side.getName() + "\n" + drink.getName();
+
+        String desription = main.getName() +"\n" + side.getName() + "\n" + drink.getName();
+        super.setDescription(desription);
+    }
+    /**
+     * Gets the name of this promotionalSet.
+     * @return this promotionalSet name.
+     */
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+    /**
+     * Gets the price of this promotionalSet.
+     * @return this promotionalSet price.
+     */
+    @Override
+    public double getPrice() {
+        return super.getPrice();
+    }
+    /**
+     * Gets the description of this promotionalSet.
+     * @return this promotionalSet description.
+     */
+    @Override
+    public String getDescription() {
+        return super.getDescription();
     }
 }

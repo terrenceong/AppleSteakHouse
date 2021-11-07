@@ -1,21 +1,13 @@
 package RRPSS;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
 
-import invoice.Invoice;
-import invoice.InvoiceMgr;
-import menu.Drinks;
-import menu.MainCourse;
-import menu.PromotionalSet;
-import menu.Sides;
-import menu.MenuMgr;
-import order.Order;
-import order.OrderItems;
-import order.OrderMgr;
-import reservation.Reservation;
-import reservation.Table;
+
+import invoice.InvoiceUI;
+import menu.*;
+import order.OrderUI;
+import reservation.ReservationUI;
 import reservation.ReservationMgr;
 
 /**
@@ -28,46 +20,6 @@ import reservation.ReservationMgr;
 
 public class RRPSSApp {
     private static Scanner sc = new Scanner(System.in);
-    /**
-     * Storing all main course object.
-     */
-    public static List<MainCourse> mainCoursesList = new ArrayList<>();
-    /**
-     * Storing all side dish object.
-     */
-    public static List<Sides> sidesList = new ArrayList<>();
-    /**
-     * Storing all drink object.
-     */
-    public static List<Drinks> drinksList = new ArrayList<>();
-    /**
-     * Storing all promotional set object.
-     */
-    public static List<PromotionalSet> promotionalSetList = new ArrayList<>();
-    /**
-     * Storing all current dining in order.
-     */
-    public static List<Order> dineInOrderList = new ArrayList<>();
-    /**
-     * Storing all pending take away orders.
-     */
-    public static List<Order> takeAwayOrderList = new ArrayList<>();
-    /**
-     * Log completed orders.
-     */
-    public static List<Order> completedOrderList = new ArrayList<>();
-    /**
-     * Tables inside this restaurant.
-     */
-    public static List<Table> tableList = new ArrayList<>();
-    /**
-     * List of reservation.
-     */
-    public static List<Reservation> reservationList = new ArrayList<>();
-    /**
-     * List of invoice.
-     */
-    public static List<Invoice> invoiceList = new ArrayList<>();
     
     public static void main(String[] args) {
     	try {
@@ -93,10 +45,10 @@ public class RRPSSApp {
                 ReservationMgr.checkExpiredReservations();
                 switch(choice)
                 {
-	                case 1: MenuMgr.showMenuOptions();break;
-	                case 2: OrderMgr.showOrderOptions(s);;break;
-	                case 3: ReservationMgr.showReservationOptions();;break;
-	                case 4: InvoiceMgr.showInvoiceOptions();;break;
+	                case 1: MenuUI.showMenuOptions();break;
+	                case 2: OrderUI.showOrderOptions(s);;break;
+	                case 3: ReservationUI.showReservationOptions();;break;
+	                case 4: InvoiceUI.showInvoiceOptions();;break;
                     default: quit = true;
                 }
             }
@@ -119,7 +71,7 @@ public class RRPSSApp {
         s.setName(name);
     }
 
-    private static void initializeTestValues() {
+    /*private static void initializeTestValues() {
     	Staff s = new Staff();
         s.setID("12");
         s.setName("RUSSELL");
@@ -134,5 +86,5 @@ public class RRPSSApp {
         		"D12345C", 4, itemList));
     	completedOrderList.add(new Order(s, false, "16/10/2021", "00:00", 
         		"D12346C", 4, itemList2));
-    }
+    }*/
 }

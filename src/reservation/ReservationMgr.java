@@ -1,6 +1,7 @@
 package reservation;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,37 +10,12 @@ import order.Order;
 import reservation.Reservation;
 import reservation.Table;
 
-public class ReservationMgr {
-    private static Scanner sc = new Scanner(System.in);
-    static List<Order> dineInOrderList = RRPSSApp.dineInOrderList;
-    static List<Order> takeAwayOrderList =RRPSSApp.takeAwayOrderList;
-    static List<Order> completedOrderList = RRPSSApp.completedOrderList;
-    static List<Table> tableList = RRPSSApp.tableList;
-    static List<Reservation> reservationList = RRPSSApp.reservationList;
+import static reservation.ReservationUI.sc;
 
-    public static void showReservationOptions() {
-        boolean quit = false;
-        do
-        {
-            System.out.println("======Reservation Options======");
-            System.out.println("1 -> Create reservation booking");
-            System.out.println("2 -> Check/Remove reservation booking");
-            System.out.println("3 -> Check table availability");
-            System.out.println("4 -> Set table availability");
-            System.out.println("5 -> Return to main");
-            System.out.print("Enter your choice:");
-            int choice = sc.nextInt();
-            ReservationMgr.checkExpiredReservations();
-            switch(choice)
-            {
-	            case 1: createReservation();break;
-	            case 2: checkReservations();break;
-	            case 3: printTables();break;
-	            case 4: setTableAvailability();break;
-                default: quit = true;
-            }
-        } while(!quit);
-    }
+public class ReservationMgr {
+
+    static List<Table> tableList = new ArrayList<>();
+    static List<Reservation> reservationList = new ArrayList<>();
 
     public static void initializeTables()
     {
@@ -54,18 +30,9 @@ public class ReservationMgr {
         tableList.add(new Table(9,6));
         tableList.add(new Table(10,10));
     }
+
     
-    private static void printTables()
-    {
-	   	int i =1;
-	   	System.out.println("=======Available Tables=======");
-	    for(Table t:tableList) {
-	       	System.out.print("Table "+ i++ +": ");
-	   		System.out.println(t.getAvailability());
-	    }
-    }
-    
-    private static void setTableAvailability()
+     static void setTableAvailability()
     {
     	int tableId;
     	String availability;
@@ -87,7 +54,7 @@ public class ReservationMgr {
 		}
     }
     
-    private static void createReservation(){
+     static void createReservation(){
     	try {
     		String reservationDate=null, name;
         	int pax, contact;
@@ -158,7 +125,7 @@ public class ReservationMgr {
     	}
     }
     
-    private static void checkReservations() {
+     static void checkReservations() {
     	if(reservationList.isEmpty()) {
 			System.out.println("No current Reservations");
 			return;
@@ -194,5 +161,12 @@ public class ReservationMgr {
 	    		System.out.println("Reservation not found");
         }
     }
-    
+
+	public static List<Table> getTableList() {
+		return tableList;
+	}
+
+	public static List<Reservation> getReservationList() {
+		return reservationList;
+	}
 }

@@ -14,58 +14,31 @@ import menu.PromotionalSet;
 import menu.Sides;
 import order.Order;
 import order.OrderItems;
+import order.OrderMgr;
 import reservation.ReservationMgr;
 import reservation.Table;
 
+import static invoice.InvoiceUI.sc;
+
+
 public class InvoiceMgr {
-    private static Scanner sc = new Scanner(System.in);
-    static List<MainCourse> mainCoursesList = RRPSS.RRPSSApp.mainCoursesList;
-    static List<Sides> sidesList = RRPSS.RRPSSApp.sidesList;
-    static List<Drinks> drinksList = RRPSS.RRPSSApp.drinksList;
-    static List<PromotionalSet> promotionalSetList = RRPSS.RRPSSApp.promotionalSetList;
-    static List<Order> dineInOrderList = RRPSS.RRPSSApp.dineInOrderList;
-    static List<Order> takeAwayOrderList = RRPSS.RRPSSApp.takeAwayOrderList;
-    static List<Order> completedOrderList = RRPSS.RRPSSApp.completedOrderList;
-    static List<Table> tableList = RRPSS.RRPSSApp.tableList;
-    static List<Invoice> invoiceList = RRPSS.RRPSSApp.invoiceList;
 
-    public static void showInvoiceOptions() {
-        boolean quit = false;
-        do
-        {
-            System.out.println("======Invoice Options======");
-            System.out.println("1 -> Print order invoice");
-            System.out.println("2 -> View order invoices");
-            System.out.println("3 -> Print sale revenue report by period");
-            System.out.println("4 -> Return to main");
-            System.out.print("Enter your choice:");
-            int choice = sc.nextInt();
-            ReservationMgr.checkExpiredReservations();
-            switch(choice)
-            {
-	            case 1: closeOrderInvoice();break;
-	            case 2: listInvoices();break;
-	            case 3: salesReport();break;
-                default: quit = true;
-            }
-        } while(!quit);
-    }
-
+    static List<Invoice> invoiceList = new ArrayList<>();
     
-    private static void closeOrderInvoice() {
-        if (dineInOrderList.size() == 0 && takeAwayOrderList.size() == 0) {
+     static void closeOrderInvoice() {
+        if (OrderMgr.getDineInOrderList().size() == 0 && OrderMgr.getTakeAwayOrderList().size() == 0) {
             System.out.println("There are no orders right now.");
             return;
         }
         else {
-            if (takeAwayOrderList.size() != 0) {
+            if (OrderMgr.getTakeAwayOrderList().size() != 0) {
                 System.out.println("========Takeaway Orders========");
-                for (Order o : takeAwayOrderList)
+                for (Order o : OrderMgr.getTakeAwayOrderList())
                     System.out.println("#" + o.getOrderid() + " " + o.getOrderTime());
             }
-            if (dineInOrderList.size() != 0) {
+            if (OrderMgr.getDineInOrderList().size() != 0) {
                 System.out.println("========Dine in Orders=========");
-                for (Order o : dineInOrderList)
+                for (Order o : OrderMgr.getDineInOrderList())
                     System.out.println("#" + o.getOrderid() + " Table " + o.getTable() + " " + o.getOrderTime());
             }
             int index = -1;
@@ -74,8 +47,8 @@ public class InvoiceMgr {
                 System.out.print("Enter Order ID to print invoice:");
                 String choice = sc.nextLine().toUpperCase();
                 if (choice.charAt(0) == 'T') {
-                    for (int i = 0; i < takeAwayOrderList.size(); i++) {
-                        if (takeAwayOrderList.get(i).getOrderid().equals(choice)) {
+                    for (int i = 0; i < OrderMgr.getTakeAwayOrderList().size(); i++) {
+                        if (OrderMgr.getTakeAwayOrderList().get(i).getOrderid().equals(choice)) {
                             index = i;
                             break;
                         }
@@ -84,7 +57,7 @@ public class InvoiceMgr {
                         System.out.println("Invalid Order ID please try again");
                         continue;
                     }
-                    Order o = takeAwayOrderList.get(index);
+                    Order o = OrderMgr.getTakeAwayOrderList().get(index);
                     double subCost = o.getTotalCost();
                     double serviceCharge = 0;
                     double gst = subCost*0.07;
@@ -95,14 +68,14 @@ public class InvoiceMgr {
                     Invoice newInvoice = new Invoice(o.getOrderid()+"C", o.getOrderDate(), o.getOrderTime(), o.getS(), o.getItemList(),
                     		subCost, serviceCharge, gst, discount, totalCost);
                     invoiceList.add(newInvoice);
-                    completedOrderList.add(new Order(o.getS(), o.isMembership(), o.getOrderDate(), o.getOrderTime(), 
+                    OrderMgr.getCompletedOrderList().add(new Order(o.getS(), o.isMembership(), o.getOrderDate(), o.getOrderTime(), 
                     		o.getOrderid()+"C", o.getTable(), o.getItemList()));
-                    takeAwayOrderList.remove(index);
+                    OrderMgr.getTakeAwayOrderList().remove(index);
                     printOrderInvoice(newInvoice);
                 }
                 else {
-                    for (int i = 0; i < dineInOrderList.size(); i++) {
-                        if (dineInOrderList.get(i).getOrderid().equals(choice)) {
+                    for (int i = 0; i < OrderMgr.getDineInOrderList().size(); i++) {
+                        if (OrderMgr.getDineInOrderList().get(i).getOrderid().equals(choice)) {
                             index = i;
                             break;
                         }
@@ -111,7 +84,7 @@ public class InvoiceMgr {
                         System.out.println("Invalid Order ID please try again");
                         continue;
                     }
-                    Order o = dineInOrderList.get(index);
+                    Order o = OrderMgr.getDineInOrderList().get(index);
                     double subCost = o.getTotalCost();
                     double serviceCharge = subCost*0.1;
                     double gst = subCost*0.07;
@@ -122,51 +95,19 @@ public class InvoiceMgr {
                     Invoice newInvoice = new Invoice(o.getOrderid()+"C", o.getOrderDate(), o.getOrderTime(), o.getS(), o.getItemList(),
                     		subCost, serviceCharge, gst, discount, totalCost);
                     invoiceList.add(newInvoice);
-                    completedOrderList.add(new Order(o.getS(), o.isMembership(), o.getOrderDate(), o.getOrderTime(), 
+                    OrderMgr.getCompletedOrderList().add(new Order(o.getS(), o.isMembership(), o.getOrderDate(), o.getOrderTime(), 
                     		o.getOrderid()+"C", o.getTable(), o.getItemList()));
-                    tableList.get(o.getTable()-1).setAvailability("AVAILABLE");
-                    dineInOrderList.remove(index);
+                    ReservationMgr.getTableList().get(o.getTable()-1).setAvailability("AVAILABLE");
+                    OrderMgr.getDineInOrderList().remove(index);
                     printOrderInvoice(newInvoice);
                 }
             }
         }
     }
     
-    private static void printOrderInvoice(Invoice i) {
-    	System.out.println("========Apple Steak House========");
-    	System.out.print("Staff Name: ");
-    	System.out.println(i.getS().getName());
-    	System.out.print("Order ID: ");
-    	System.out.println(i.getOrderid());
-    	System.out.print("Order Date: ");
-    	System.out.println(i.getOrderDate());
-    	
-    	System.out.println("---------------------------------");
-    	for (OrderItems item : i.getItemList()) {
-            System.out.printf(item.getQty() + " %-25s %.2f", item.getItemName(), item.getPrice());
-            System.out.println();
-        }
-    	System.out.println("---------------------------------");
-    	System.out.printf("%-27s %.2f","SUBTOTAL:", i.getSubTotalCost());
-        System.out.println();
-    	System.out.printf("%-27s %.2f","10% SERVICE CHARGE:", i.getServiceCharge());
-        System.out.println();
-    	System.out.printf("%-27s %.2f","7% GST:", i.getGst());
-        System.out.println();
-    	if(i.getDiscount()!=0) {
-    	    System.out.printf("%-27s %.2f","5% MEMBER DISCOUNT:", i.getDiscount());
-            System.out.println();
-    	}
-    	System.out.println("_________________________________");
-    	System.out.printf("%-27s %.2f","TOTAL DUE:", i.getTotalCost());
-        System.out.println();
-    	System.out.println("---------------------------------");
-    	System.out.println("-Thank you for ordering with us!-");
-    	System.out.println("--------Please Come Again!-------");
-    	
-    }
     
-    private static void listInvoices() {
+    
+     static void listInvoices() {
         int index = -1;
         sc.nextLine();
         if(invoiceList.size()==0) {
@@ -196,7 +137,7 @@ public class InvoiceMgr {
         }
     }
     
-    private static void salesReport() {
+     static void salesReport() {
     	System.out.println("Generate Report for Daily or Monthly Sales?");
         System.out.println("1. Daily");
         System.out.println("2. Monthly");
@@ -208,7 +149,7 @@ public class InvoiceMgr {
         int choice = sc.nextInt();
         switch (choice){
         	case 1:
-        		for (Order order : completedOrderList) {
+        		for (Order order : OrderMgr.getCompletedOrderList()) {
         			if(currentDate.toLocalDate().isEqual(LocalDate.parse(order.getOrderDate(), format))){
         				for (OrderItems item : order.getItemList()) {
         					entered=false;
@@ -228,7 +169,7 @@ public class InvoiceMgr {
 	        	        }
         			}
         		}
-            	System.out.println("===========CZ2002 Cafe===========");
+            	System.out.println("===========Apple Steak House===========");
             	System.out.println("========Gross Revenue for========");
             	System.out.println("==========="+currentDate.format(format)+"============");
             	System.out.println("---------------------------------");
@@ -241,7 +182,7 @@ public class InvoiceMgr {
             	System.out.println();
             	break;
         	case 2:
-        		for (Order order : completedOrderList) {
+        		for (Order order : OrderMgr.getCompletedOrderList()) {
         			if(currentDate.toLocalDate().getMonth()==(LocalDate.parse(order.getOrderDate(), format)).getMonth()){
         				for (OrderItems item : order.getItemList()) {
         					entered=false;
@@ -261,7 +202,7 @@ public class InvoiceMgr {
 	        	        }
         			}
         		}
-            	System.out.println("===========CZ2002 Cafe===========");
+            	System.out.println("===========Apple Steak House===========");
             	System.out.println("========Gross Revenue for========");
             	System.out.println("============="+currentDate.toLocalDate().getMonth()+"=============");
             	System.out.println("---------------------------------");
@@ -274,5 +215,38 @@ public class InvoiceMgr {
             	System.out.println();
             	break;
         }
+    }
+    static void printOrderInvoice(Invoice i) {
+        System.out.println("========Apple Steak House========");
+        System.out.print("Staff Name: ");
+        System.out.println(i.getS().getName());
+        System.out.print("Order ID: ");
+        System.out.println(i.getOrderid());
+        System.out.print("Order Date: ");
+        System.out.println(i.getOrderDate());
+
+        System.out.println("---------------------------------");
+        for (OrderItems item : i.getItemList()) {
+            System.out.printf(item.getQty() + " %-25s %.2f", item.getItemName(), item.getPrice());
+            System.out.println();
+        }
+        System.out.println("---------------------------------");
+        System.out.printf("%-27s %.2f","SUBTOTAL:", i.getSubTotalCost());
+        System.out.println();
+        System.out.printf("%-27s %.2f","10% SERVICE CHARGE:", i.getServiceCharge());
+        System.out.println();
+        System.out.printf("%-27s %.2f","7% GST:", i.getGst());
+        System.out.println();
+        if(i.getDiscount()!=0) {
+            System.out.printf("%-27s %.2f","5% MEMBER DISCOUNT:", i.getDiscount());
+            System.out.println();
+        }
+        System.out.println("_________________________________");
+        System.out.printf("%-27s %.2f","TOTAL DUE:", i.getTotalCost());
+        System.out.println();
+        System.out.println("---------------------------------");
+        System.out.println("-Thank you for ordering with us!-");
+        System.out.println("--------Please Come Again!-------");
+
     }
 }

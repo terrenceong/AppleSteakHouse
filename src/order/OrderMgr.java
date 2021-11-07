@@ -1,19 +1,15 @@
 package order;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 import RRPSS.RRPSSApp;
 import RRPSS.Staff;
-import menu.Drinks;
-import menu.MainCourse;
-import menu.PromotionalSet;
-import menu.Sides;
+import menu.*;
 import reservation.ReservationMgr;
 import reservation.Table;
+
+import static order.OrderUI.sc;
 
 /**
  * Control class of order options.
@@ -23,39 +19,21 @@ import reservation.Table;
  * @since 2021-05-11
  */
 public class OrderMgr {
-    private static Scanner sc = new Scanner(System.in);
-    /**
-     * Storing all main course object.
-     */
-    static List<MainCourse> mainCoursesList = RRPSSApp.mainCoursesList;
-    /**
-     * Storing all side dish object.
-     */
-    static List<Sides> sidesList = RRPSSApp.sidesList;
-    /**
-     * Storing all side dish object.
-     */
-    static List<Drinks> drinksList = RRPSSApp.drinksList;
-    /**
-     * Storing all promotional set object.
-     */
-    static List<PromotionalSet> promotionalSetList = RRPSSApp.promotionalSetList;
+
+    
     /**
      * Storing all current dining in order.
      */
-    static List<Order> dineInOrderList = RRPSSApp.dineInOrderList;
+    static List<Order> dineInOrderList = new ArrayList<>();
     /**
      * Storing all pending take away orders.
      */
-    static List<Order> takeAwayOrderList = RRPSSApp.takeAwayOrderList;
+    static List<Order> takeAwayOrderList = new ArrayList<>();
     /**
      * Log completed orders.
      */
-    static List<Order> completedOrderList = RRPSSApp.completedOrderList;
-    /**
-     * Tables inside this restaurant.
-     */
-    static List<Table> tableList = RRPSSApp.tableList;
+    static List<Order> completedOrderList = new ArrayList<>();
+
     /**
      * Display order options.
      * This method involve directing users to the right option within the class.
@@ -86,7 +64,7 @@ public class OrderMgr {
      * Logic and flow to create order.
      * @param s reference of staff object that is creating this order.
      */
-    private static void createOrder(Staff s) {
+     static void createOrder(Staff s) {
         sc.nextLine();
         Random rdm = new Random();
         Date d = new Date();
@@ -112,7 +90,7 @@ public class OrderMgr {
         if (t == 'n') {
             orderID = "D" + (rdm.nextInt(9999) + 10000 + rdm.nextInt(5));
             dineInOrderList.add(new Order(s, mem, date, time, orderID, table));
-            tableList.get(table-1).setAvailability("UNAVAILABLE");
+            ReservationMgr.getTableList().get(table-1).setAvailability("UNAVAILABLE");
         } else {
             orderID = "T" + (rdm.nextInt(9999) + 10000 + rdm.nextInt(5));
             takeAwayOrderList.add(new Order(s, mem, date, time, orderID, table));
@@ -122,7 +100,7 @@ public class OrderMgr {
     /**
      * Display order information that currently is in the system.
      */
-    private static void viewOrder() {
+     static void viewOrder() {
         if (dineInOrderList.size() == 0 && takeAwayOrderList.size() == 0) {
             System.out.println("There are no orders right now");
             return;
@@ -205,7 +183,7 @@ public class OrderMgr {
      * Staff can customize order by adding new items, updating existing item
      * and remove item from order.
      */
-    private static void editOrders()
+     static void editOrders()
     {
         int index = -1;
         int x = 0;
@@ -248,54 +226,54 @@ public class OrderMgr {
                         switch (l) {
 
                             case 'm':
-                                for (MainCourse m : mainCoursesList)
+                                for (MainCourse m : MenuMgr.getMainCoursesList())
                                     System.out.println(++x + ") " + m.getName() + " $" + m.getPrice());
                                 System.out.print("Select your MainCourse:");
                                 int m = sc.nextInt() - 1;
                                 System.out.print("Enter qty:");
                                 int q = sc.nextInt();
                                 Order o = takeAwayOrderList.get(index);
-                                o.setTotalCost(o.getTotalCost() + (mainCoursesList.get(m).getPrice() * q));
-                                o.getItemList().add(new OrderItems(q, mainCoursesList.get(m).getPrice(),
-                                        mainCoursesList.get(m).getName()));
+                                o.setTotalCost(o.getTotalCost() + (MenuMgr.getMainCoursesList().get(m).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, MenuMgr.getMainCoursesList().get(m).getPrice(),
+                                        MenuMgr.getMainCoursesList().get(m).getName()));
                                 break;
                             case 's':
-                                for (Sides s : sidesList)
+                                for (Sides s : MenuMgr.getSidesList())
                                     System.out.println(++x + ") " + s.getName() + " $" + s.getPrice());
                                 System.out.print("Select your Side:");
                                 int s = sc.nextInt() - 1;
                                 System.out.print("Enter qty:");
                                 q = sc.nextInt();
                                 o = takeAwayOrderList.get(index);
-                                o.setTotalCost(o.getTotalCost() + (sidesList.get(s).getPrice() * q));
-                                o.getItemList().add(new OrderItems(q, sidesList.get(s).getPrice(),
-                                        sidesList.get(s).getName()));
+                                o.setTotalCost(o.getTotalCost() + (MenuMgr.getSidesList().get(s).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, MenuMgr.getSidesList().get(s).getPrice(),
+                                        MenuMgr.getSidesList().get(s).getName()));
                                 break;
                             case 'd':
-                                for (Drinks d : drinksList)
+                                for (Drinks d : MenuMgr.getDrinksList())
                                     System.out.println(++x + ") " + d.getName() + " $" + d.getPrice());
                                 System.out.print("Select your drink:");
                                 int d = sc.nextInt() - 1;
                                 System.out.print("Enter qty:");
                                 q = sc.nextInt();
                                 o = takeAwayOrderList.get(index);
-                                o.setTotalCost(o.getTotalCost() + (drinksList.get(d).getPrice() * q));
-                                o.getItemList().add(new OrderItems(q, drinksList.get(d).getPrice(),
-                                        drinksList.get(d).getName()));
+                                o.setTotalCost(o.getTotalCost() + (MenuMgr.getDrinksList().get(d).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, MenuMgr.getDrinksList().get(d).getPrice(),
+                                        MenuMgr.getDrinksList().get(d).getName()));
                                 break;
                             case 'p':
-                                for (PromotionalSet p : promotionalSetList) {
+                                for (PromotionalSet p : MenuMgr.getPromotionalSetList()) {
                                     System.out.println(++x + ") " + p.getName() + " $" + p.getPrice());
-                                    System.out.println(p.getDesription());
+                                    System.out.println(p.getDescription());
                                 }
                                 System.out.print("Select your promotional set:");
                                 int p = sc.nextInt() - 1;
                                 System.out.print("Enter qty:");
                                 q = sc.nextInt();
                                 o = takeAwayOrderList.get(index);
-                                o.setTotalCost(o.getTotalCost() + (promotionalSetList.get(p).getPrice() * q));
-                                o.getItemList().add(new OrderItems(q, promotionalSetList.get(p).getPrice(),
-                                        promotionalSetList.get(p).getName()));
+                                o.setTotalCost(o.getTotalCost() + (MenuMgr.getPromotionalSetList().get(p).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, MenuMgr.getPromotionalSetList().get(p).getPrice(),
+                                        MenuMgr.getPromotionalSetList().get(p).getName()));
                                 break;
 
                         }
@@ -378,54 +356,54 @@ public class OrderMgr {
                         switch (l) {
 
                             case 'm':
-                                for (MainCourse m : mainCoursesList)
+                                for (MainCourse m : MenuMgr.getMainCoursesList())
                                     System.out.println(++x + ") " + m.getName() + " $" + m.getPrice());
                                 System.out.print("Select your MainCourse:");
                                 int m = sc.nextInt() - 1;
                                 System.out.print("Enter qty:");
                                 int q = sc.nextInt();
                                 Order o = dineInOrderList.get(index);
-                                o.setTotalCost(o.getTotalCost() + (mainCoursesList.get(m).getPrice() * q));
-                                o.getItemList().add(new OrderItems(q, mainCoursesList.get(m).getPrice(),
-                                        mainCoursesList.get(m).getName()));
+                                o.setTotalCost(o.getTotalCost() + (MenuMgr.getMainCoursesList().get(m).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, MenuMgr.getMainCoursesList().get(m).getPrice(),
+                                        MenuMgr.getMainCoursesList().get(m).getName()));
                                 break;
                             case 's':
-                                for (Sides s : sidesList)
+                                for (Sides s : MenuMgr.getSidesList())
                                     System.out.println(++x + ") " + s.getName() + " $" + s.getPrice());
                                 System.out.print("Select your Side:");
                                 int s = sc.nextInt() - 1;
                                 System.out.print("Enter qty:");
                                 q = sc.nextInt();
                                 o = dineInOrderList.get(index);
-                                o.setTotalCost(o.getTotalCost() + (sidesList.get(s).getPrice() * q));
-                                o.getItemList().add(new OrderItems(q, sidesList.get(s).getPrice(),
-                                        sidesList.get(s).getName()));
+                                o.setTotalCost(o.getTotalCost() + (MenuMgr.getSidesList().get(s).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, MenuMgr.getSidesList().get(s).getPrice(),
+                                        MenuMgr.getSidesList().get(s).getName()));
                                 break;
                             case 'd':
-                                for (Drinks d : drinksList)
+                                for (Drinks d : MenuMgr.getDrinksList())
                                     System.out.println(++x + ") " + d.getName() + " $" + d.getPrice());
                                 System.out.print("Select your drink:");
                                 int d = sc.nextInt() - 1;
                                 System.out.print("Enter qty:");
                                 q = sc.nextInt();
                                 o = dineInOrderList.get(index);
-                                o.setTotalCost(o.getTotalCost() + (drinksList.get(d).getPrice() * q));
-                                o.getItemList().add(new OrderItems(q, drinksList.get(d).getPrice(),
-                                        drinksList.get(d).getName()));
+                                o.setTotalCost(o.getTotalCost() + (MenuMgr.getDrinksList().get(d).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, MenuMgr.getDrinksList().get(d).getPrice(),
+                                        MenuMgr.getDrinksList().get(d).getName()));
                                 break;
                             case 'p':
-                                for (PromotionalSet p : promotionalSetList) {
+                                for (PromotionalSet p : MenuMgr.getPromotionalSetList()) {
                                     System.out.println(++x + ") " + p.getName() + " $" + p.getPrice());
-                                    System.out.println(p.getDesription());
+                                    System.out.println(p.getDescription());
                                 }
                                 System.out.print("Select your promotional set:");
                                 int p = sc.nextInt() - 1;
                                 System.out.print("Enter qty:");
                                 q = sc.nextInt();
                                 o = dineInOrderList.get(index);
-                                o.setTotalCost(o.getTotalCost() + (promotionalSetList.get(p).getPrice() * q));
-                                o.getItemList().add(new OrderItems(q, promotionalSetList.get(p).getPrice(),
-                                        promotionalSetList.get(p).getName()));
+                                o.setTotalCost(o.getTotalCost() + (MenuMgr.getPromotionalSetList().get(p).getPrice() * q));
+                                o.getItemList().add(new OrderItems(q, MenuMgr.getPromotionalSetList().get(p).getPrice(),
+                                        MenuMgr.getPromotionalSetList().get(p).getName()));
                                 break;
 
                         }
@@ -492,5 +470,17 @@ public class OrderMgr {
 
             }
         }
+    }
+
+    public static List<Order> getDineInOrderList() {
+        return dineInOrderList;
+    }
+
+    public static List<Order> getTakeAwayOrderList() {
+        return takeAwayOrderList;
+    }
+
+    public static List<Order> getCompletedOrderList() {
+        return completedOrderList;
     }
 }
