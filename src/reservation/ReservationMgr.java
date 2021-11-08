@@ -11,12 +11,26 @@ import reservation.Reservation;
 import reservation.Table;
 
 import static reservation.ReservationUI.sc;
-
+/**
+ * Control class of reservation options.
+ *
+ * @author Russell
+ * @version 1.0
+ * @since 2021-08-11
+ */
 public class ReservationMgr {
-
+	/**
+     * Storing all current tables.
+     */
     static List<Table> tableList = new ArrayList<>();
+    /**
+     * Storing all current reservations.
+     */
     static List<Reservation> reservationList = new ArrayList<>();
 
+    /**
+     * Initialize and create default tables.
+     */
     public static void initializeTables()
     {
         tableList.add(new Table(1,2));
@@ -31,7 +45,9 @@ public class ReservationMgr {
         tableList.add(new Table(10,10));
     }
 
-    
+    /**
+     * Used by staff to set table availability
+     */
      static void setTableAvailability()
     {
     	int tableId;
@@ -54,6 +70,9 @@ public class ReservationMgr {
 		}
     }
     
+     /**
+      * Logic and flow to create reservation.
+      */
      static void createReservation(){
     	try {
     		String reservationDate=null, name;
@@ -105,6 +124,10 @@ public class ReservationMgr {
     	
 	}
     
+     /**
+      * Automated method to check for expired reservations
+      * Called whenever user enters or exits a menu option
+      */
     public static void checkExpiredReservations() {
     	try {
     		int i=0;
@@ -125,7 +148,11 @@ public class ReservationMgr {
     	}
     }
     
+    /**
+     * Displays and removes reservations that is currently in the system.
+     */
      static void checkReservations() {
+    	checkExpiredReservations();
     	if(reservationList.isEmpty()) {
 			System.out.println("No current Reservations");
 			return;
@@ -162,10 +189,18 @@ public class ReservationMgr {
         }
     }
 
+	 /**
+	  * Gets the list of tables.
+	  * @return the list of tables.
+	  */
 	public static List<Table> getTableList() {
 		return tableList;
 	}
 
+    /**
+     * Gets a list of reservations created.
+     * @return a list of reservations created.
+     */
 	public static List<Reservation> getReservationList() {
 		return reservationList;
 	}

@@ -48,7 +48,7 @@ public class RRPSSApp {
 	                case 1: MenuUI.showMenuOptions();break;
 	                case 2: OrderUI.showOrderOptions(s);break;
 	                case 3: ReservationUI.showReservationOptions();break;
-	                case 4: InvoiceUI.showInvoiceOptions();;break;
+	                case 4: InvoiceUI.showInvoiceOptions();break;
                     default: quit = true;
                 }
             }
@@ -70,21 +70,4 @@ public class RRPSSApp {
         s.setID(id);
         s.setName(name);
     }
-
-    /*private static void initializeTestValues() {
-    	Staff s = new Staff();
-        s.setID("12");
-        s.setName("RUSSELL");
-        List<OrderItems> itemList = new ArrayList<>();
-        List<OrderItems> itemList2 = new ArrayList<>();
-        itemList.add(new OrderItems(2, 10.0, "Something"));
-        itemList2.add(new OrderItems(2, 10.0, "Something"));
-        itemList.add(new OrderItems(1, 20.0, "Something2"));
-        itemList.add(new OrderItems(4, 20.0, "Something2"));
-        itemList2.add(new OrderItems(1, 15.0, "Something3"));
-    	completedOrderList.add(new Order(s, false, "13/10/2021", "00:00", 
-        		"D12345C", 4, itemList));
-    	completedOrderList.add(new Order(s, false, "16/10/2021", "00:00", 
-        		"D12346C", 4, itemList2));
-    }*/
 }

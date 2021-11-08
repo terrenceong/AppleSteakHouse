@@ -6,9 +6,20 @@ import reservation.ReservationMgr;
 import java.util.Scanner;
 
 import static invoice.InvoiceMgr.*;
-
+/**
+ * Invoice user interface.
+ * 
+ * @author Russell
+ * @version 1.0
+ * @since 2021-08-11
+ *
+ */
 public class InvoiceUI {
      static Scanner sc = new Scanner(System.in);
+     /**
+      * Display Invoice options.
+      * This method involve directing users to the right option within the class.
+      */
     public static void showInvoiceOptions() {
         boolean quit = false;
         do

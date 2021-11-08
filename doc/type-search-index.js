@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"order","l":"OrderMgr"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"invoice","l":"Invoice"},{"p":"invoice","l":"InvoiceMgr"},{"p":"invoice","l":"InvoiceUI"},{"p":"reservation","l":"Reservation"},{"p":"reservation","l":"ReservationMgr"},{"p":"reservation","l":"ReservationUI"},{"p":"reservation","l":"Table"}];updateSearchResults();

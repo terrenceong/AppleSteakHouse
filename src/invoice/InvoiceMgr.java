@@ -20,11 +20,26 @@ import reservation.Table;
 
 import static invoice.InvoiceUI.sc;
 
-
+/**
+ * Control class of order options.
+ *
+ * @author Russell
+ * @version 1.0
+ * @since 2021-08-11
+ */
 public class InvoiceMgr {
 
+    /**
+     * Storing all current invoices.
+     */
     static List<Invoice> invoiceList = new ArrayList<>();
-    
+
+    /**
+     * Logic and flow to create invoice.
+     * checks for current outstanding orders
+     * then according to user input
+     * calculates invoice total with charges and discounts
+     */
      static void closeOrderInvoice() {
         if (OrderMgr.getDineInOrderList().size() == 0 && OrderMgr.getTakeAwayOrderList().size() == 0) {
             System.out.println("There are no orders right now.");
@@ -105,8 +120,10 @@ public class InvoiceMgr {
         }
     }
     
-    
-    
+
+     /**
+      * Display invoice information that is currently in the system.
+      */
      static void listInvoices() {
         int index = -1;
         sc.nextLine();
@@ -136,7 +153,10 @@ public class InvoiceMgr {
             printOrderInvoice(i);
         }
     }
-    
+
+     /**
+      * Display sales report for all invoice information that is currently in the system.
+      */
      static void salesReport() {
     	System.out.println("Generate Report for Daily or Monthly Sales?");
         System.out.println("1. Daily");
@@ -216,6 +236,10 @@ public class InvoiceMgr {
             	break;
         }
     }
+
+     /**
+      * Prints invoice information.
+      */
     static void printOrderInvoice(Invoice i) {
         System.out.println("========Apple Steak House========");
         System.out.print("Staff Name: ");
