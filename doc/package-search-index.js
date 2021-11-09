@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"invoice"},{"l":"reservation"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"invoice"},{"l":"menu"},{"l":"order"},{"l":"reservation"},{"l":"RRPSS"},{"l":"Test"}];updateSearchResults();
